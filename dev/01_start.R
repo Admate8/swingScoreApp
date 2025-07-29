@@ -24,7 +24,7 @@ golem::install_dev_deps()
 
 ## Create Common Files ----
 ## See ?usethis for more information
-#usethis::use_agpl3_license("Golem User")
+#usethis::use_gpl_license(version = 3, include_future = TRUE)
 #usethis::use_readme_rmd(open = FALSE)
 #devtools::build_readme()
 
