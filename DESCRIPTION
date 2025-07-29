@@ -1,0 +1,34 @@
+Package: swingScore
+Title: swingScore
+Version: 0.0.1
+Authors@R: 
+    person("Adrian", "Wisnios", , "omega.dancing.score@gmail.com", role = c("cre", "aut"))
+Description: Measuring West Coast Swing competition progression.
+License: What license is it under?
+URL: https://github.com/Admate8/swingScoreApp
+BugReports: https://github.com/Admate8/swingScoreApp/issues
+Imports: 
+    bslib (>= 0.7.0),
+    config (>= 0.3.2),
+    dplyr (>= 1.1.2),
+    echarts4r (>= 0.4.5),
+    glue (>= 1.7.0),
+    golem (>= 0.4.1),
+    here (>= 1.0.1),
+    htmlwidgets (>= 1.6.4),
+    purrr (>= 1.0.1),
+    reactable (>= 0.4.4),
+    shiny (>= 1.8.0),
+    shinycssloaders (>= 1.1.0),
+    shinyjs (>= 2.1.0),
+    shinyWidgets (>= 0.7.6),
+    stringr (>= 1.5.1),
+    tibble (>= 3.2.1),
+    tidyr (>= 1.3.1)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
