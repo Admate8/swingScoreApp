@@ -76,25 +76,7 @@ app_ui <- function(request) {
             tags$stop(offset = "0%"), tags$stop(offset = "100%")
           ))),
           tags$br(),
-          conditionalPanel(
-            condition = "input.select_dancer != '' && input.select_dancer != null",
-
-            tags$div(
-              class = "glow-triangle-container",
-              id    = "triangle_btn",
-              "",
-              tags$svg(
-                class = "glow-triangle",
-                viewBox = "0 0 120 70",  # maintains aspect ratio
-                tags$polygon(
-                  points = "10,10 110,10 60,58",
-                  class = "glow-border",
-                  fill = "url(#glow-gradient)"
-                )
-              )
-            )
-
-          )
+          uiOutput("button_triangle_go")
         ),
 
         # Section 2
@@ -106,7 +88,8 @@ app_ui <- function(request) {
             class = "slide",
             div(
               class = "content",
-              echarts4r::echarts4rOutput("test")
+              echarts4r::echarts4rOutput("test"),
+              tableOutput("test2")
             )
           ),
           # Slide 2

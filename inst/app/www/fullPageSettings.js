@@ -6,11 +6,11 @@ $( document ).ready(function() {
     new fullpage('#fullpage', {
     autoScrolling: true,
     navigation: true,
-
     slidesNavigation: true,
     scrollHorizontally: true,
-
     controlArrows: false,
+    hybrid: true,
+
 
     // Prevent the user from scrolling down when on the first page until the button is clicked
     afterLoad: function(origin, destination, direction) {
@@ -29,7 +29,10 @@ $( document ).ready(function() {
   });
 
   $(document).on('click', '#triangle_btn', function() {
-    isButtonClicked = false;
+    isButtonClicked = true;
+
+    // Unlock fullPage navigation
+    //$("#fp-nav").addClass("nav-unlocked");
 
     // Allow scrolling in all directions after the button is clicked
     fullpage_api.setAllowScrolling(true);
