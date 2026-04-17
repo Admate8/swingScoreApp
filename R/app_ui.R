@@ -49,47 +49,45 @@ app_ui <- function(request) {
               style = "z-index: 3;",
               tags$div("FAQ", class = "faq-header"),
               bslib::accordion(
-                open  = FALSE,
+                open     = FALSE,
                 multiple = FALSE,
                 bslib::accordion_panel(
                   title = "What is Omega?",
-                  "text1jbkfhjwbfhewbfhjwebfjhwehbfvjewfhjwebfhhjewfjhwefbbhwejhbjcfewbfchjewbfchjewbfchjewbfhjebwfbewbfjhewbvfhjewvfjhewbvfhjewvfchewvfjhwevjhwvhfjwevfhejwvjvhfhjwevfhjwevhf"
+                  lorem::ipsum(1)
                 ),
                 bslib::accordion_panel(
                   title = "My data looks incorrect. What should I do?",
-                  "text2"
+                  lorem::ipsum(2)
                 ),
                 bslib::accordion_panel(
                   title = "Competition is missing. Why?",
-                  "text3"
+                  lorem::ipsum(1)
                 ),
                 bslib::accordion_panel(
                   title = "Title 4",
-                  "text4"
+                  lorem::ipsum(1)
                 )
               )
             )
           ),
+          tags$svg(tags$defs(tags$linearGradient(
+            id = "glow-gradient",
+            x1 = "0%", y1 = "0%", x2 = "100%", y2 = "100%",
+            tags$stop(offset = "0%"), tags$stop(offset = "100%")
+          ))),
+          tags$br(),
           conditionalPanel(
             condition = "input.select_dancer != '' && input.select_dancer != null",
+
             tags$div(
               class = "glow-triangle-container",
               id    = "triangle_btn",
               "",
               tags$svg(
                 class = "glow-triangle",
-                viewBox = "0 0 120 60",  # maintains aspect ratio
-                tags$defs(
-                  tags$linearGradient(
-                    id = "glow-gradient",
-                    x1 = "0%", y1 = "0%",
-                    x2 = "100%", y2 = "100%",
-                    tags$stop(offset = "0%"),
-                    tags$stop(offset = "100%")
-                  )
-                ),
+                viewBox = "0 0 120 70",  # maintains aspect ratio
                 tags$polygon(
-                  points = "10,10 110,10 60,50",
+                  points = "10,10 110,10 60,58",
                   class = "glow-border",
                   fill = "url(#glow-gradient)"
                 )
@@ -144,6 +142,12 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "swingScore"
+    ),
+    # Cache-busting link — version changes every run
+    tags$link(
+      rel  = "stylesheet",
+      type = "text/css",
+      href = paste0("www/custom_styles.css?v=", as.integer(Sys.time()))
     ),
     shinyjs::useShinyjs(),
 
