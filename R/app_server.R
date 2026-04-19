@@ -22,6 +22,10 @@ app_server <- function(input, output, session) {
   #   shinyjs::runjs("fullpage_api.moveTo(2, 1);")
   # })
 
+  output$table_event_details <- reactable::renderReactable({
+    table_event_details(df_events, df_subevents, df_comps)
+  })
+
 
   output$test <- echarts4r::renderEcharts4r({
     mtcars$name <- rownames(mtcars)

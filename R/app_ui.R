@@ -13,6 +13,7 @@ app_ui <- function(request) {
       tags$div(
         id = "fullpage",
 
+        # 1. Welcome Page ----
         tags$div(
           class = "section",
           tags$div(class = "halo"),
@@ -41,58 +42,83 @@ app_ui <- function(request) {
 
         tags$div(
           class = "section",
+
+          # 2. Indiv Analysis Set-up ----
           tags$div(
             class = "slide",
-            tags$div(
-              shinyWidgets::pickerInput(
-                inputId    = "select_dancer",
-                label      = NULL,
-                selected   = NULL,
-                multiple   = FALSE,
-                width      = "25rem",
-                choices    = rownames(mtcars),
-                choicesOpt = list(
-                  subtext = paste0("(", mtcars$mpg, ")")
-                ),
-                options = shinyWidgets::pickerOptions(
-                  size                = 3,
-                  liveSearch          = TRUE,
-                  liveSearchNormalize = TRUE,
-                  liveSearchStyle     = "contains",
-                  noneResultsText     = "No matches...",
-                  showSubtext         = TRUE,
-                  title               = "Select your name or WSDC ID..."
-                )
-              ) |> tags$div(style = "display: flex; justify-content: center; margin-top: 1rem;")
-            ),
             bslib::layout_columns(
-              col_widths = c(-3, 6, -3),
-              class = "home-content-container",
+              col_widths = c(5, 7),
+
               tags$div(
-                style = "z-index: 3;",
-                tags$div("FAQ", class = "faq-header"),
-                bslib::accordion(
-                  open     = FALSE,
-                  multiple = FALSE,
-                  bslib::accordion_panel(
-                    title = "What is Omega?",
-                    lorem::ipsum(1)
-                  ),
-                  bslib::accordion_panel(
-                    title = "My data looks incorrect. What should I do?",
-                    lorem::ipsum(2)
-                  ),
-                  bslib::accordion_panel(
-                    title = "Competition is missing. Why?",
-                    lorem::ipsum(1)
-                  ),
-                  bslib::accordion_panel(
-                    title = "Title 4",
-                    lorem::ipsum(1)
+                class = "d-flex align-items-center justify-content-center h-100",
+                tags$div(
+                  class = "w-100",
+                  shinyWidgets::pickerInput(
+                    inputId    = "select_dancer",
+                    label      = NULL,
+                    selected   = NULL,
+                    multiple   = FALSE,
+                    width      = "25rem",
+                    choices    = rownames(mtcars),
+                    choicesOpt = list(
+                      subtext = paste0("(", mtcars$mpg, ")")
+                    ),
+                    options = shinyWidgets::pickerOptions(
+                      size                = 3,
+                      liveSearch          = TRUE,
+                      liveSearchNormalize = TRUE,
+                      liveSearchStyle     = "contains",
+                      noneResultsText     = "No matches...",
+                      showSubtext         = TRUE,
+                      title               = "Select your name or WSDC ID..."
+                    )
+                  ) |> tags$div(style = "display: flex; justify-content: center; margin-top: 1rem;"),
+                  br(),
+                  bslib::layout_columns(
+                    col_widths = c(12, -2, 8, -2),
+                    tags$div("FAQ", class = "faq-header"),
+                    bslib::accordion(
+                      open     = FALSE,
+                      multiple = FALSE,
+                      bslib::accordion_panel(
+                        title = "What is Omega?",
+                        lorem::ipsum(1)
+                      ),
+                      bslib::accordion_panel(
+                        title = "My competition is missing. Why?",
+                        lorem::ipsum(2)
+                      ),
+                      bslib::accordion_panel(
+                        title = "I can't see my name or WSDC ID. Why?",
+                        lorem::ipsum(1)
+                      ),
+                      bslib::accordion_panel(
+                        title = "My data looks incorrect. Why?",
+                        lorem::ipsum(1)
+                      )
+
+                    )
+                  )
+                )
+              ),
+
+              tags$div(
+                class = "d-flex align-items-center h-100",
+                tags$div(
+                  class = "glass-wrapper d-flex flex-column",
+                  style = "height: 80vh; width: 100%; min-width: 0;",
+                  tags$div("Available Events & Competitions", class = "glass-div-header"),
+                  br(),
+                  tags$div(
+                    class = "scrollable-table",
+                    style = "flex: 1 1 auto; min-width: 0; width: 100%; border-radius: 15px;",
+                    reactable::reactableOutput("table_event_details", width = "100%", height = "65vh") |> add_spinner()
                   )
                 )
               )
+
             )
+
 
           ),
 

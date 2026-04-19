@@ -27,3 +27,25 @@ label_button_group_analysis <- HTML('
     <line x1="7.3"  y1="10.1" x2="4.9"  y2="11.3" stroke="#c7d2fe" stroke-width="0.7" stroke-dasharray="1.2 1"/>
   </svg>
 ')
+
+add_spinner <- function(ui_element) {
+  ui_element |>
+    shinycssloaders::withSpinner(color = col_palette$global$primary, size = 1.5, type = 6)
+}
+
+#' Shade Hex Colour
+#'
+#' @param hex_color String: hex colour.
+#' @param factor Shading factor: negative/positive values will darken/lighten the colour, respectively.
+#'
+#' @return Shaded hex colour.
+get_hex_colour_shade <- function(hex_color, factor = 0.2) {
+  if (factor == 0) hex_color
+  else {
+    rgb_values <- grDevices::col2rgb(hex_color) / 255
+    rgb_values <- rgb_values + (1 - rgb_values) * factor
+    rgb_values <- base::pmin(base::pmax(rgb_values, 0), 1)
+    grDevices::rgb(rgb_values[1], rgb_values[2], rgb_values[3])
+  }
+}
+

@@ -4,7 +4,9 @@ $( document ).ready(function() {
     new fullpage('#fullpage', {
     autoScrolling: true,
     navigation: true,
-    slidesNavigation: true
+    slidesNavigation: true,
+
+    normalScrollElements: '.scrollable-table'
 
     });
 });
