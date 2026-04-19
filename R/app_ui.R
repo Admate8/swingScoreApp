@@ -19,64 +19,88 @@ app_ui <- function(request) {
           tags$div(class = "geometric-pattern"),
           tags$div(
             class = "content-title",
-            tags$h1("Welcome to the Omega App"),
+            tags$h1("Welcome to the Omega Project"),
             tags$div(class = "accent-line"),
-            shinyWidgets::pickerInput(
-              inputId    = "select_dancer",
-              label      = NULL,
-              selected   = NULL,
-              multiple   = FALSE,
-              width      = "25rem",
-              choices    = rownames(mtcars),
-              choicesOpt = list(
-                subtext = paste0("(", mtcars$mpg, ")")
-              ),
-              options = shinyWidgets::pickerOptions(
-                size                = 3,
-                liveSearch          = TRUE,
-                liveSearchNormalize = TRUE,
-                liveSearchStyle     = "contains",
-                noneResultsText     = "No matches...",
-                showSubtext         = TRUE,
-                title               = "Select your name or WSDC ID..."
-              )
-            ) |> tags$div(style = "display: flex; justify-content: center; margin-top: 1rem;")
-          ),
-          bslib::layout_columns(
-            col_widths = c(-3, 6, -3),
-            class = "home-content-container",
+            tags$div("I want to...", class = "faq-header"), br(),
+            actionButton(
+              inputId = "button_go_individual",
+              label   = label_button_indivdual_analysis,
+              onclick = "fullpage_api.moveTo(2, 0);",
+              class   = "btn-glow",
+              style   = "font-size: 1.5rem;"
+            ),
+            actionButton(
+              inputId = "button_go_group",
+              label   = label_button_group_analysis,
+              onclick = "fullpage_api.silentMoveTo(2, 1);",
+              class   = "btn-glow",
+              style   = "font-size: 1.5rem;"
+            )
+          )
+        ),
+
+        tags$div(
+          class = "section",
+          tags$div(
+            class = "slide",
             tags$div(
-              style = "z-index: 3;",
-              tags$div("FAQ", class = "faq-header"),
-              bslib::accordion(
-                open     = FALSE,
-                multiple = FALSE,
-                bslib::accordion_panel(
-                  title = "What is Omega?",
-                  lorem::ipsum(1)
+              shinyWidgets::pickerInput(
+                inputId    = "select_dancer",
+                label      = NULL,
+                selected   = NULL,
+                multiple   = FALSE,
+                width      = "25rem",
+                choices    = rownames(mtcars),
+                choicesOpt = list(
+                  subtext = paste0("(", mtcars$mpg, ")")
                 ),
-                bslib::accordion_panel(
-                  title = "My data looks incorrect. What should I do?",
-                  lorem::ipsum(2)
-                ),
-                bslib::accordion_panel(
-                  title = "Competition is missing. Why?",
-                  lorem::ipsum(1)
-                ),
-                bslib::accordion_panel(
-                  title = "Title 4",
-                  lorem::ipsum(1)
+                options = shinyWidgets::pickerOptions(
+                  size                = 3,
+                  liveSearch          = TRUE,
+                  liveSearchNormalize = TRUE,
+                  liveSearchStyle     = "contains",
+                  noneResultsText     = "No matches...",
+                  showSubtext         = TRUE,
+                  title               = "Select your name or WSDC ID..."
+                )
+              ) |> tags$div(style = "display: flex; justify-content: center; margin-top: 1rem;")
+            ),
+            bslib::layout_columns(
+              col_widths = c(-3, 6, -3),
+              class = "home-content-container",
+              tags$div(
+                style = "z-index: 3;",
+                tags$div("FAQ", class = "faq-header"),
+                bslib::accordion(
+                  open     = FALSE,
+                  multiple = FALSE,
+                  bslib::accordion_panel(
+                    title = "What is Omega?",
+                    lorem::ipsum(1)
+                  ),
+                  bslib::accordion_panel(
+                    title = "My data looks incorrect. What should I do?",
+                    lorem::ipsum(2)
+                  ),
+                  bslib::accordion_panel(
+                    title = "Competition is missing. Why?",
+                    lorem::ipsum(1)
+                  ),
+                  bslib::accordion_panel(
+                    title = "Title 4",
+                    lorem::ipsum(1)
+                  )
                 )
               )
             )
+
           ),
-          tags$svg(tags$defs(tags$linearGradient(
-            id = "glow-gradient",
-            x1 = "0%", y1 = "0%", x2 = "100%", y2 = "100%",
-            tags$stop(offset = "0%"), tags$stop(offset = "100%")
-          ))),
-          tags$br(),
-          uiOutput("button_triangle_go")
+
+          tags$div(
+            class = "slide"
+          )
+
+
         ),
 
         # Section 2
@@ -99,6 +123,15 @@ app_ui <- function(request) {
           # Slide 3
           tags$div(
             class = "slide"
+          )
+        ),
+
+        # Footer ----
+        tags$div(
+          class = "section fp-auto-height",
+          tags$div(
+            class = "customFooter",
+            "XXX"
           )
         )
       )
