@@ -1,3 +1,5 @@
+
+//// Global Styles
 $fade_level1: $primary;
 $fade_level2: #818cf8;
 $fade_level3: #4F46E5;
@@ -7,13 +9,20 @@ $fade_level3: #4F46E5;
   padding-top: 5vh;
 }
 
+// Stylise each section
 .section {
-    padding: 50px !important;
+  padding: 50px !important;
+  background: linear-gradient(180deg,
+    #0a0a0f 0%,
+    #1a1a2e 25%,
+    #16213e 50%,
+    #0f3460 75%,
+    #0e4b99 100%
+  );
 }
 
 
-
-// Customise navigation arrows
+//// Customise Navigation Arrows and Buttons
 .fp-arrow.fp-prev {
     border-width: 1.2rem 1.2rem 1.2rem 0 !important;
     border-color: transparent $primary transparent transparent !important;
@@ -31,8 +40,7 @@ $fade_level3: #4F46E5;
             drop-shadow(0 0 6px $primary);
 }
 
-
-// Customizing vertical nav position
+// Vertical nav position
 #fp-nav{
   top: 10% !important;
   margin: auto !important;
@@ -49,22 +57,11 @@ $fade_level3: #4F46E5;
 }
 
 
+//// Stylise Welcome Page
 // Remove padding around the main container
 .container-fluid {
   padding-right: 0px !important;
   padding-left: 0px !important;
-}
-
-// Stylise each section
-.section {
-  padding: 2rem;
-  background: linear-gradient(180deg,
-    #0a0a0f 0%,
-    #1a1a2e 25%,
-    #16213e 50%,
-    #0f3460 75%,
-    #0e4b99 100%
-  );
 }
 
 // Add geometric shapes at the bottom of the slide
@@ -237,7 +234,6 @@ $fade_level3: #4F46E5;
   }
 }
 
-
 // Title div styling
 .content-title {
   position: relative;
@@ -287,7 +283,7 @@ $fade_level3: #4F46E5;
   }
 }
 
-// actionButton styling
+//// Stylise actionButton
 .btn-glow {
   position: relative;
   overflow: hidden;
@@ -305,7 +301,7 @@ $fade_level3: #4F46E5;
   animation: fadeSlideIn 0.5s ease-out forwards;
 }
 
-/* Shimmer sweep */
+// Shimmer sweep effect
 .btn-glow::before {
   content: '';
   position: absolute;
@@ -349,9 +345,9 @@ $fade_level3: #4F46E5;
 }
 
 
-// Glass Div wrapper
+//// Glass Div wrapper
 .glass-wrapper {
-  //height: 100%;       /* fill the column height */
+  //height: 100%;
   //box-sizing: border-box;
   position: relative;
   background: rgba(255, 255, 255, 0.05);
@@ -367,7 +363,7 @@ $fade_level3: #4F46E5;
   animation: wrapperFadeIn 0.6s ease-out forwards;
 }
 
-/* Subtle primary tint layer */
+// Subtle primary tint layer
 .glass-wrapper::before {
   content: '';
   position: absolute;
@@ -401,7 +397,7 @@ $fade_level3: #4F46E5;
 }
 
 
-// Accordion styling
+//// Accordion Styling
 .accordion {
   background: transparent;
   border: none;
@@ -444,7 +440,6 @@ $fade_level3: #4F46E5;
   from { transform: translateX(100%); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
-
 
 .accordion-item:hover {
   background: rgba(255, 255, 255, 0.08);
@@ -493,7 +488,7 @@ $fade_level3: #4F46E5;
   overflow-wrap: break-word;
 }
 
-// Frequently Asked Questions header
+//// FAQ Header
 .faq-header {
   text-align: center;
   font-size: 2.5rem;
@@ -511,7 +506,8 @@ $fade_level3: #4F46E5;
   letter-spacing: 0.02rem;
 }
 
-// Stylise pickerInput
+
+//// Stylise pickerInput
 .bootstrap-select {
   position: relative;
   background: transparent;
@@ -690,6 +686,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 
+//// Reactable Container
 .scrollable-table .rt-table {
   height: 100%;
   overflow-y: auto;
@@ -709,4 +706,106 @@ input[type="search"]::-webkit-search-cancel-button {
 .rt-tr-highlight:hover,
 .rt-tr-highlight-sticky:hover {
   background-color: #202946 !important;
+}
+
+
+
+//// Sliding Plots Effect
+.comparison-container {
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.plot-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+// TOP plot is clipped left/right
+.top-plot {
+  clip-path: inset(0 50% 0 0); // start halfway revealed
+  z-index: 2;
+}
+
+// Vertical slider
+.slider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 0.15em; // scales with font size
+  transform: translateX(-50%);
+  z-index: 10;
+  cursor: ew-resize;
+  mix-blend-mode: screen;
+
+  // soft gradient line (fades at edges)
+  background: linear-gradient(
+    to bottom,
+    rgba(99, 102, 241, 0),
+    rgba(139, 92, 246, 0.7) 20%,
+    rgba(139, 92, 246, 0.7) 80%,
+    rgba(99, 102, 241, 0)
+  );
+
+  box-shadow:
+    0 0 0.4em rgba(139, 92, 246, 0.35),
+    0 0 1em rgba(99, 102, 241, 0.2);
+}
+
+.slider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 1.8em;
+  height: 1.8em;
+  border-radius: 50%;
+
+  background: rgba(99, 102, 241, 0.22);
+  backdrop-filter: blur(0.6em);
+  -webkit-backdrop-filter: blur(0.6em);
+
+  border: 0.08em solid rgba(255, 255, 255, 0.25);
+
+  box-shadow:
+    0 0.3em 1.2em rgba(99, 102, 241, 0.25),
+    inset 0 0.05em 0.15em rgba(255, 255, 255, 0.35);
+
+  transition: all 0.2s ease;
+}
+
+.slider:hover::after {
+  transform: translate(-50%, -50%) scale(1.12);
+  box-shadow:
+    0 0.4em 1.6em rgba(139, 92, 246, 0.35),
+    inset 0 0.08em 0.2em rgba(255, 255, 255, 0.4);
+}
+
+.slider:active::after {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  left: -0.8em;
+  width: 1.6em;
+  height: 100%;
+}
+
+
+//// Custom echarts Container
+.echarts-wrap {
+  border-radius: 1rem;
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  overflow: hidden;
+  backdrop-filter: blur(1rem);
 }

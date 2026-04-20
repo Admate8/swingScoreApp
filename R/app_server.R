@@ -6,7 +6,7 @@
 #' @noRd
 app_server <- function(input, output, session) {
 
-  # Load data ----
+  # Load Data ----
   # db_con <- DBI::dbConnect(
   #   RPostgres::Postgres(),
   #   host     = Sys.getenv("NEON_HOST"),
@@ -18,16 +18,21 @@ app_server <- function(input, output, session) {
   #
   # on.exit(DBI::dbDisconnect(db_con))
 
-
+  # Table Event Details ----
   output$table_event_details <- reactable::renderReactable({
     table_event_details(df_events, df_subevents, df_comps)
   })
 
-  output$test1 <- renderText({
-    input$select_dancer
+  # Plots Omega Change ----
+  output$plot_nonomega_individual <- echarts4r::renderEcharts4r({
+    req(input$select_dancer)
+    plot_nonomega_individual(df_dancers, input$select_dancer)
   })
 
-  # output$test2 <- renderTable({
-  #   df_dancers
-  # })
+  output$plot_omega_individual <- echarts4r::renderEcharts4r({
+    req(input$select_dancer)
+    plot_omega_individual(df_dancers, input$select_dancer)
+  })
+
+
 }

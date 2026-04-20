@@ -15,10 +15,12 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           df_dancers |>
             dplyr::distinct(contestant, wsdc_id, contestant_id) |>
             dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
+            dplyr::arrange(contestant) |>
             dplyr::pull(contestant_id),
           df_dancers |>
             dplyr::distinct(contestant, wsdc_id, contestant_id) |>
             dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
+            dplyr::arrange(contestant) |>
             dplyr::pull(contestant)
         ),
         choicesOpt = list(
@@ -27,6 +29,7 @@ ui_individual_analysis_setup <- bslib::layout_columns(
             df_dancers |>
               dplyr::distinct(contestant, wsdc_id) |>
               dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
+              dplyr::arrange(contestant) |>
               dplyr::pull(wsdc_id),
             ")"
           )
@@ -73,8 +76,7 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           )
         )
       )
-    ),
-    textOutput("test1")
+    )
   ),
 
   tags$div(

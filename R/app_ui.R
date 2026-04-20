@@ -63,11 +63,25 @@ app_ui <- function(request) {
           # Slide 1
           tags$div(
             class = "slide",
-            div(
-              class = "content",
-              echarts4r::echarts4rOutput("test"),
-              tableOutput("test2")
-            )
+            div(class = "comparison-container",
+
+                # bottom plot
+                tags$div(
+                  class = "plot-layer echarts-wrap",
+                  echarts4r::echarts4rOutput("plot_nonomega_individual", height = "80vh")
+
+                ),
+
+                # top plot (clipped)
+                tags$div(
+                  class = "plot-layer top-plot echarts-wrap",
+                  echarts4r::echarts4rOutput("plot_omega_individual", height = "80vh")
+
+                ),
+
+                # vertical slider handle
+                div(class = "slider")
+            ) |> tags$div(class = "glass-wrapper")
           ),
           # Slide 2
           tags$div(

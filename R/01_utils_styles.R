@@ -1,6 +1,10 @@
 col_palette <- list(
   global = list(
     primary        = "#9333EA",
+
+    font_primary   = "#E4E4E4",
+    font_secondary = "#ADADAD",
+
     body_col       = "#F1F5F9",
     body_col_sec   = "#CBD5E1",
     bg_primary     = "#2C2C2C",
@@ -8,12 +12,12 @@ col_palette <- list(
   ),
   divisions = list(
     advancing = list(
-      Newcomer     = "#A8DADC",
-      Novice       = "#5FBCBF",
-      Intermediate = "#FFC1CC",
-      Advanced     = "#FF5C7A",
-      `All-Stars`  = "#B39CD0",
-      Champions    = "#8059B1"
+      Newcomer     = "#86efac",
+      Novice       = "#6ee7b7",
+      Intermediate = "#c4b5fd",
+      Advanced     = "#7dd3fc",
+      `All-Stars`  = "#fde047",
+      Champions    = "#fca5a5"
     ),
     nonadvancing = list(
       jun = "#BC4749",
