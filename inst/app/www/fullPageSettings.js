@@ -6,10 +6,8 @@ $( document ).ready(function() {
     navigation: true,
     slidesNavigation: true,
 
-    normalScrollElements: '.scrollable-table'
-
+    normalScrollElements: '.scrollable-table, [id^="bs-select-"]'
     });
 });
-
 
 

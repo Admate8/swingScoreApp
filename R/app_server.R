@@ -18,21 +18,16 @@ app_server <- function(input, output, session) {
   #
   # on.exit(DBI::dbDisconnect(db_con))
 
-  # observeEvent(input$button_go_individ, {
-  #   shinyjs::runjs("fullpage_api.moveTo(2, 1);")
-  # })
 
   output$table_event_details <- reactable::renderReactable({
     table_event_details(df_events, df_subevents, df_comps)
   })
 
-
-  output$test <- echarts4r::renderEcharts4r({
-    mtcars$name <- rownames(mtcars)
-    mtcars |> echarts4r::e_chart(name) |> echarts4r::e_bar(serie = disp)
+  output$test1 <- renderText({
+    input$select_dancer
   })
 
-  output$test2 <- renderTable({
-    df_all_events
-  })
+  # output$test2 <- renderTable({
+  #   df_dancers
+  # })
 }
