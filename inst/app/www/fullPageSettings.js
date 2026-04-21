@@ -2,14 +2,15 @@ $( document ).ready(function() {
 
     // fullpage options
     new fullpage('#fullpage', {
-    autoScrolling: true,
-    navigation: true,
-    slidesNavigation: true,
+        autoScrolling: true,
+        navigation: true,
+        slidesNavigation: true,
 
-    normalScrollElements: '.scrollable-table, [id^="bs-select-"]'
+        normalScrollElements: '.scrollable-table, [id^="bs-select-"]'
     });
 });
 
+// Settings for the slidding plots
 document.addEventListener('DOMContentLoaded', function() {
 
     const container = document.querySelector('.comparison-container');

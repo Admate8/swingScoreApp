@@ -3,35 +3,35 @@
 
 
 custom_reactable_theme <- reactable::reactableTheme(
-  color                = "#c7d2fe",
+  color                = col_palette$global$tertiary,
   # highlightColor = "red",
   # Controled by: .rt-tr-highlight:hover .rt-tr-highlight-sticky:hover
   # class in the SCSS file
   backgroundColor      = "transparent",
-  borderColor          = "rgba(99, 102, 241, 0.25)",
+  borderColor          = scales::alpha(col_palette$global$secondary, 0.25),
   cellPadding          = "0.65rem 1rem",
 
   tableStyle           = list(borderRadius = "1rem"),
   headerStyle          = list(
     color            = "rgba(165, 148, 249, 0.6)",
-    background       = "#202946",
+    background       = col_palette$global$solid_bg,
     fontWeight       = 400,
     fontSize         = "0.7rem",
     letterSpacing    = "0.1em",
     textTransform    = "uppercase",
-    borderBottomColor = "rgba(99, 102, 241, 0.25)"
+    borderBottomColor = scales::alpha(col_palette$global$secondary, 0.25)
   ),
-  rowStyle             = list(borderBottomColor = "rgba(99, 102, 241, 0.08)"),
-  paginationStyle      = list(
-    color       = "rgba(165, 148, 249, 0.5)",
-    fontSize    = "0.78rem",
-    borderColor = "rgba(99, 102, 241, 0.12)"
-  ),
+  rowStyle             = list(borderBottomColor = scales::alpha(col_palette$global$secondary, 0.08)),
+  # paginationStyle      = list(
+  #   color       = "rgba(165, 148, 249, 0.5)",
+  #   fontSize    = "0.78rem",
+  #   borderColor = "rgba(99, 102, 241, 0.12)"
+  # ),
   searchInputStyle     = list(
-    background  = "rgba(99, 102, 241, 0.07)",
-    border      = "1px solid rgba(99, 102, 241, 0.2)",
+    background  = scales::alpha(col_palette$global$secondary, 0.07),
+    border      = paste0("1px solid ", scales::alpha(col_palette$global$secondary, 0.2)),
     borderRadius = "0.6rem",
-    color       = "#c7d2fe",
+    color       = col_palette$global$tertiary,
     fontSize    = "0.85rem",
     width       = "100%"
   )
@@ -47,9 +47,9 @@ get_data_zoom_date <- function(echart) {
       type            = "slider",
       bottom          = 20,
       height          = 20,
-      borderColor     = "rgba(99,102,241,0.25)",
-      backgroundColor = "rgba(99,102,241,0.05)",
-      fillerColor     = "rgba(99,102,241,0.12)",
+      borderColor     = scales::alpha(col_palette$global$secondary, 0.25),
+      backgroundColor = scales::alpha(col_palette$global$secondary, 0.05),
+      fillerColor     = scales::alpha(col_palette$global$secondary, 0.12),
       labelFormatter  = htmlwidgets::JS(
         "function(value, valueStr) {
           let current_date = new Date(valueStr);
@@ -57,29 +57,29 @@ get_data_zoom_date <- function(echart) {
         }"
       ),
       handleStyle = list(
-        color       = "rgba(99,102,241,0.5)",
-        borderColor = "#a5b4fc",
+        color       = scales::alpha(col_palette$global$secondary, 0.5),
+        borderColor = col_palette$global$secondary,
         borderWidth = 1,
-        shadowColor = "rgba(165,180,252,0.4)",
+        shadowColor = scales::alpha(col_palette$global$secondary, 0.4),
         shadowBlur  = 6,
         borderCap   = "round"
       ),
       moveHandleStyle = list(
-        color       = "rgba(99,102,241,0.3)",
-        borderColor = "rgba(165,180,252,0.4)"
+        color       = scales::alpha(col_palette$global$secondary, 0.3),
+        borderColor = scales::alpha(col_palette$global$secondary, 0.4)
       ),
       selectedDataBackground = list(
-        lineStyle = list(color = "#a5b4fc", width = 1),
-        areaStyle = list(color = "rgba(165,180,252,0.08)")
+        lineStyle = list(color = col_palette$global$secondary, width = 1),
+        areaStyle = list(color = scales::alpha(col_palette$global$secondary, 0.08))
       ),
       dataBackground = list(
-        lineStyle = list(color = "rgba(99,102,241,0.2)", width = 1),
-        areaStyle = list(color = "rgba(99,102,241,0.04)")
+        lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.2), width = 1),
+        areaStyle = list(color = scales::alpha(col_palette$global$secondary, 0.04))
       ),
       emphasis = list(
-        handleStyle     = list(borderColor = "#c7d2fe", shadowBlur = 10),
-        moveHandleStyle = list(color = "rgba(99,102,241,0.5)")
+        handleStyle     = list(borderColor = col_palette$global$tertiary, shadowBlur = 10),
+        moveHandleStyle = list(color = scales::alpha(col_palette$global$secondary, 0.5))
       ),
-      textStyle = list(color = "rgba(165,148,249,0.5)", fontSize = 10)
+      textStyle = list(color = scales::alpha(col_palette$global$secondary, 0.5), fontSize = 10)
     )
 }

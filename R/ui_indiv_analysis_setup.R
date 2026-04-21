@@ -52,6 +52,10 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           open     = FALSE,
           multiple = FALSE,
           bslib::accordion_panel(
+            title = "What is the Omega score?",
+            lorem::ipsum(2)
+          ),
+          bslib::accordion_panel(
             title = "My competition is missing. Why?",
             lorem::ipsum(2)
           ),
@@ -61,6 +65,10 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           ),
           bslib::accordion_panel(
             title = "My WSDC ID shows as NA. Why?",
+            lorem::ipsum(2)
+          ),
+          bslib::accordion_panel(
+            title = "My WSDC ID is negative. Why?",
             lorem::ipsum(2)
           )
         ),

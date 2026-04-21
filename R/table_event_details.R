@@ -147,12 +147,12 @@ table_event_details <- function(df_events, df_subevents, df_comps) {
               reactable::colDef(
                 cell  = function(value) {
                   if (!is.na(value) && value == 1) {
-                    htmltools::HTML(
+                    htmltools::HTML(paste0(
                       '<svg width="1.1em" height="1.1em" viewBox="0 0 16 16" fill="none">
-                      <circle cx="8" cy="8" r="7" fill="rgba(99,102,241,0.2)" stroke="rgba(99,102,241,0.5)" stroke-width="0.8"/>
-                      <polyline points="4.5,8.5 7,11 11.5,5.5" stroke="#a5b4fc" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                      <circle cx="8" cy="8" r="7" fill="', scales::alpha(col_palette$global$secondary, 0.2), '" stroke="', scales::alpha(col_palette$global$secondary, 0.5), '" stroke-width="0.8"/>
+                      <polyline points="4.5,8.5 7,11 11.5,5.5" stroke="', col_palette$global$secondary, '" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>'
-                    )
+                    ))
                   } else {
                     ""
                   }
@@ -173,14 +173,14 @@ table_event_details <- function(df_events, df_subevents, df_comps) {
             name   = "Event Name",
             html   = TRUE,
             width  = 200,
-            style  = list(background = "#202946"),
+            style  = list(background = col_palette$global$solid_bg),
             headerStyle = list(textAlign = "center"),
             cell   = function(value, index) {sprintf(
               '<a
             href="%s" target="_blank"
-            style="color:#a5b4fc; text-decoration:none; font-weight:bold;"
+            style="color:%s; text-decoration:none; font-weight:bold;"
            >%s</a>',
-              df_events_table$event_link[index], value
+              df_events_table$event_link[index], col_palette$global$tertiary, value
             )}
           ),
           event_date = reactable::colDef(
@@ -188,7 +188,7 @@ table_event_details <- function(df_events, df_subevents, df_comps) {
             name   = "Event Date",
             width  = 100,
             align  = "center",
-            style  = list(background = "#202946"),
+            style  = list(background = col_palette$global$solid_bg),
             cell   = function(value) {format(as.Date(value), "%d %b %Y")},
             headerStyle = list(textAlign = "center")
           ),
@@ -206,7 +206,7 @@ table_event_details <- function(df_events, df_subevents, df_comps) {
       details = reactable::colDef(
         width  = 45,
         sticky = "left",
-        style  = list(background = "#202946"),
+        style  = list(background = col_palette$global$solid_bg),
 
         details = function(index) {
 
@@ -230,7 +230,7 @@ table_event_details <- function(df_events, df_subevents, df_comps) {
                     width  = 344,
                     align  = "right",
                     sticky = "left",
-                    style  = list(background = "#202946")
+                    style  = list(background = col_palette$global$solid_bg)
                   ),
                   col_empty = reactable::colDef(name = " ", width = 100),
                   # Move the last column here because it's 1px narrower

@@ -4,6 +4,9 @@ $fade_level1: $primary;
 $fade_level2: #818cf8;
 $fade_level3: #4F46E5;
 
+$tertiary: #c7d2fe;
+
+
 .customFooter{
   height: 10vh;
   padding-top: 5vh;
@@ -288,7 +291,7 @@ $fade_level3: #4F46E5;
   position: relative;
   overflow: hidden;
   background: rgba($primary, 0.12);
-  color: #c7d2fe;
+  color: $tertiary;
   border: 1px solid rgba($primary, 0.35);
   border-radius: 1rem;
   padding: 0.625rem 1.75rem;
@@ -747,15 +750,15 @@ input[type="search"]::-webkit-search-cancel-button {
   // soft gradient line (fades at edges)
   background: linear-gradient(
     to bottom,
-    rgba(99, 102, 241, 0),
+    rgba($secondary, 0),
     rgba(139, 92, 246, 0.7) 20%,
     rgba(139, 92, 246, 0.7) 80%,
-    rgba(99, 102, 241, 0)
+    rgba($secondary, 0)
   );
 
   box-shadow:
     0 0 0.4em rgba(139, 92, 246, 0.35),
-    0 0 1em rgba(99, 102, 241, 0.2);
+    0 0 1em rgba($secondary, 0.2);
 }
 
 .slider::after {
@@ -769,14 +772,14 @@ input[type="search"]::-webkit-search-cancel-button {
   height: 1.8em;
   border-radius: 50%;
 
-  background: rgba(99, 102, 241, 0.22);
+  background: rgba($secondary, 0.22);
   backdrop-filter: blur(0.6em);
   -webkit-backdrop-filter: blur(0.6em);
 
   border: 0.08em solid rgba(255, 255, 255, 0.25);
 
   box-shadow:
-    0 0.3em 1.2em rgba(99, 102, 241, 0.25),
+    0 0.3em 1.2em rgba($secondary, 0.25),
     inset 0 0.05em 0.15em rgba(255, 255, 255, 0.35);
 
   transition: all 0.2s ease;
@@ -805,7 +808,7 @@ input[type="search"]::-webkit-search-cancel-button {
 //// Custom echarts Container
 .echarts-wrap {
   border-radius: 1rem;
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  border: 1px solid rgba($secondary, 0.25);
   overflow: hidden;
   backdrop-filter: blur(1rem);
 }

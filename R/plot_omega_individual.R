@@ -45,14 +45,14 @@ plot_omega_individual <- function(df_dancers, selected_contestant_id) {
         formatter  = "{a}",
         color      = "inherit",
         fontWeight = "bold",
-        backgroundColor = "rgba(15,17,30,0.75)",
+        backgroundColor = scales::alpha(col_palette$global$tooltip_bg, 0.75),
         borderRadius    = 15,
         padding         = 10
       )
     ) |>
     echarts4r::e_color(
       color = unname(col_palette$division$advancing[unique(df_results_contestant$division_adj)]),
-      background = "#202946"
+      background = col_palette$global$solid_bg
     ) |>
     echarts4r::e_x_axis(
       axisPointer = list(label = list(formatter = htmlwidgets::JS(
@@ -61,10 +61,10 @@ plot_omega_individual <- function(df_dancers, selected_contestant_id) {
           return current_date.toLocaleDateString('en-GB', {year: 'numeric', month: 'long'});
         }"
       ))),
-      axisLine  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
-      axisTick  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
+      axisLine  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
       axisLabel = list(
-        color = "rgba(165,148,249,0.5)", fontSize = 11, fontWeight = 300,
+        color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 11, fontWeight = 300,
         formatter = htmlwidgets::JS("
           function(value) {
             const d = new Date(value);
@@ -78,19 +78,19 @@ plot_omega_individual <- function(df_dancers, selected_contestant_id) {
       max       = 100.1,
       position  = "left",
       formatter = htmlwidgets::JS("function(value) {return value + '\U03A9';}"),
-      axisLabel = list(color = "rgba(165,148,249,0.5)", fontSize = 11, fontWeight = 300),
-      axisLine  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
-      axisTick  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
-      splitLine = list(lineStyle = list(color = "rgba(99,102,241,0.1)", type = "dashed"))
+      axisLabel = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 11, fontWeight = 300),
+      axisLine  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      splitLine = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.1), type = "dashed"))
     ) |>
     echarts4r::e_tooltip(
       trigger = "axis",
-      backgroundColor = "rgba(15,17,30,0.92)",
-      borderColor     = "rgba(99,102,241,0.25)",
-      textStyle       = list(color = "#c7d2fe", fontSize = 12, fontWeight = 300),
+      backgroundColor = scales::alpha(col_palette$global$tooltip_bg, 0.92),
+      borderColor     = scales::alpha(col_palette$global$secondary, 0.25),
+      textStyle       = list(color = col_palette$global$tertiary, fontSize = 12, fontWeight = 300),
       extraCssText    = paste0(
         "backdrop-filter:blur(10px);",
-        "box-shadow:0 0 20px rgba(99,102,241,0.2);"
+        "box-shadow:0 0 20px ", scales::alpha(col_palette$global$secondary, 0.2), ";"
       ),
       borderRadius    = 15,
       padding         = 15,
@@ -115,15 +115,15 @@ plot_omega_individual <- function(df_dancers, selected_contestant_id) {
       }
     ")
     ) |>
-    echarts4r::e_grid(right = "7%", left = "3%", top = "15%") |>
+    echarts4r::e_grid(right = "7%", left = "5%", top = "15%") |>
     echarts4r::e_legend(show = FALSE) |>
     echarts4r::e_title(
-      text      = "Omega Points",
+      text      = "Omega Score",
       subtext   = "reward your performance across all rounds - not just the final!",
       textAlign = "left",
-      left      = "2%",
-      textStyle = list(color = "#e2e8f0", fontWeight = 300, fontSize = 25),
-      subtextStyle = list(color = "rgba(165,148,249,0.5)", fontSize = 12)
+      left      = "5%",
+      textStyle = list(color = col_palette$global$font_primary, fontWeight = 300, fontSize = 25),
+      subtextStyle = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 12)
     ) |>
     echarts4r::e_toolbox(show = FALSE) |>
     get_data_zoom_date()
@@ -161,14 +161,14 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
         formatter  = "{a}",
         color      = "inherit",
         fontWeight = "bold",
-        backgroundColor = "rgba(15,17,30,0.75)",
+        backgroundColor = scales::alpha(col_palette$global$tooltip_bg, 0.75),
         borderRadius    = 15,
         padding         = 10
       )
     ) |>
     echarts4r::e_color(
       color = unname(col_palette$division$advancing[unique(df_results_contestant$division_adj)]),
-      background = "#202946"
+      background = col_palette$global$solid_bg
     ) |>
     echarts4r::e_x_axis(
       axisPointer = list(label = list(formatter = htmlwidgets::JS(
@@ -177,10 +177,10 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
           return current_date.toLocaleDateString('en-GB', {year: 'numeric', month: 'long'});
         }"
       ))),
-      axisLine  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
-      axisTick  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
+      axisLine  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
       axisLabel = list(
-        color = "rgba(165,148,249,0.5)", fontSize = 11, fontWeight = 300,
+        color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 11, fontWeight = 300,
         formatter = htmlwidgets::JS("
           function(value) {
             const d = new Date(value);
@@ -193,19 +193,19 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
       min       = 0,
       position  = "right",
       formatter = htmlwidgets::JS("function(value) {return value + ' WSDC Points';}"),
-      axisLabel = list(color = "rgba(165,148,249,0.5)", fontSize = 11, fontWeight = 300),
-      axisLine  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
-      axisTick  = list(lineStyle = list(color = "rgba(99,102,241,0.25)")),
-      splitLine = list(lineStyle = list(color = "rgba(99,102,241,0.1)", type = "dashed"))
+      axisLabel = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 11, fontWeight = 300),
+      axisLine  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      splitLine = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.1), type = "dashed"))
     ) |>
     echarts4r::e_tooltip(
       trigger = "axis",
-      backgroundColor = "rgba(15,17,30,0.92)",
-      borderColor     = "rgba(99,102,241,0.25)",
-      textStyle       = list(color = "#c7d2fe", fontSize = 12, fontWeight = 300),
+      backgroundColor = scales::alpha(col_palette$global$tooltip_bg, 0.92),
+      borderColor     = scales::alpha(col_palette$global$secondary, 0.25),
+      textStyle       = list(color = col_palette$global$tertiary, fontSize = 12, fontWeight = 300),
       extraCssText    = paste0(
         "backdrop-filter:blur(10px);",
-        "box-shadow:0 0 20px rgba(99,102,241,0.2);"
+        "box-shadow:0 0 20px ", scales::alpha(col_palette$global$secondary, 0.2), ";"
       ),
       borderRadius    = 15,
       padding         = 15,
@@ -230,15 +230,15 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
       }
     ")
     ) |>
-    echarts4r::e_grid(right = "7%", left = "3%", top = "15%") |>
+    echarts4r::e_grid(right = "7%", left = "5%", top = "15%") |>
     echarts4r::e_legend(show = FALSE) |>
     echarts4r::e_title(
       text      = "WSDC Points",
       subtext   = "overlook the effort you put into non-final rounds.",
       textAlign = "right",
       right     = "-10%",
-      textStyle = list(color = "#e2e8f0", fontWeight = 300, fontSize = 25),
-      subtextStyle = list(color = "rgba(165,148,249,0.5)", fontSize = 12)
+      textStyle = list(color = col_palette$global$font_primary, fontWeight = 300, fontSize = 25),
+      subtextStyle = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 12)
     ) |>
     echarts4r::e_toolbox(show = FALSE) |>
     get_data_zoom_date()

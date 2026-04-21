@@ -2,13 +2,17 @@ col_palette <- list(
   global = list(
     primary        = "#9333EA",
 
-    font_primary   = "#E4E4E4",
+    primary_light  = "#a594f9", # rbg(165, 148, 249) Used for axis labels, subtitles
+    secondary      = "#6366f1", # rbg(99, 102, 241)  Used for axis, custom icons, zoom elements, borders
+    tertiary       = "#c7d2fe", # rgb(199, 210, 254) Used for icon accents and tooltip text
+    tooltip_bg     = "#0f111e", # rgb(15, 17, 30)    Used for tooltip/label backgrounds
+    solid_bg       = "#202946", # Used for table columns or visible background
+
+    font_primary   = "#e2e8f0",
     font_secondary = "#ADADAD",
 
     body_col       = "#F1F5F9",
-    body_col_sec   = "#CBD5E1",
-    bg_primary     = "#2C2C2C",
-    bg_secondary   = "#474747"
+    body_col_sec   = "#CBD5E1"
   ),
   divisions = list(
     advancing = list(
@@ -45,6 +49,7 @@ col_palette <- list(
 
 app_theme <- bslib::bs_theme(
   primary                     = col_palette$global$primary,
+  secondary                   = col_palette$global$secondary,
   body_color                  = col_palette$global$body_col,
   body_color_secondary        = col_palette$global$body_col_sec,
   accordion_icon_active_color = col_palette$global$body_col,
