@@ -53,6 +53,29 @@ app_server <- function(input, output, session) {
     )
   })
 
+  debounced_button_dancer_selected <- reactive({
+    input$button_dancer_selected
+  }) |> debounce(3000)
+  observeEvent(debounced_button_dancer_selected(), {
+    showNotification(
+      tags$div(
+        tags$div(
+          style = "text-align: center; padding-bottom: 10px;",
+          tags$h5("Hint!")
+        ),
+        tags$p("Move the slider to see how Omega changes your perspective on performance!"),
+        br(),
+        tags$p(
+          "You can navigate to slides showing your Age Divisions
+          or non-dominant role competitions by using the navigation
+          arrows or the small dots at the bottom of the page."
+        )
+      ),
+      type = "default",
+      duration = 15
+    )
+  })
+
 
   # Plots omega change ----
   ## Dominant role

@@ -307,9 +307,3 @@ plot_nonomega_individual <- function(df, role, dom_role = TRUE, advancing_divs =
     echarts4r::e_toolbox(show = FALSE)
     #get_data_zoom_date()
 }
-
-
-
-# ~-----
-
-
