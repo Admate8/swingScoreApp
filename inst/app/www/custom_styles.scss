@@ -5,6 +5,7 @@ $fade_level2: #818cf8;
 $fade_level3: #4F46E5;
 
 $tertiary: #c7d2fe;
+$primary_light: #a594f9;
 
 
 .customFooter{
@@ -399,6 +400,13 @@ $tertiary: #c7d2fe;
   filter: drop-shadow(0 0 18px rgba($primary, 0.35));
 }
 
+.subheader {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba($primary_light, 0.5);
+}
+
 
 //// Accordion Styling
 .accordion {
@@ -716,8 +724,8 @@ input[type="search"]::-webkit-search-cancel-button {
 //// Sliding Plots Effect
 .comparison-container {
   position: relative;
-  width: 80vw;
-  height: 80vh;
+  width: 90vw;
+  height: 70vh;
   overflow: hidden;
 }
 

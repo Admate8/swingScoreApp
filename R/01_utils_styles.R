@@ -15,19 +15,15 @@ col_palette <- list(
     body_col_sec   = "#CBD5E1"
   ),
   divisions = list(
-    advancing = list(
-      Newcomer     = "#86efac",
-      Novice       = "#6ee7b7",
-      Intermediate = "#c4b5fd",
-      Advanced     = "#7dd3fc",
-      `All-Stars`  = "#fde047",
-      Champions    = "#fca5a5"
-    ),
-    nonadvancing = list(
-      jun = "#BC4749",
-      sop = "#BC4749",
-      mas = "#873132"
-    )
+    Newcomer      = "#86efac",
+    Novice        = "#6ee7b7",
+    Intermediate  = "#c4b5fd",
+    Advanced      = "#7dd3fc",
+    `All-Stars`   = "#fde047",
+    Champions     = "#fca5a5",
+    Juniors       = "#70e5ff",
+    Sophisticated = "#ffae00",
+    Masters       = "#8f5aff"
   ),
   roles = list(
     leader   = "#2176AE",

@@ -46,7 +46,7 @@ ui_individual_analysis_setup <- bslib::layout_columns(
       ) |> tags$div(style = "display: flex; justify-content: center; margin-top: 1rem;"),
       br(),
       bslib::layout_columns(
-        col_widths = c(12, -2, 8, -2, -4, 4, -4),
+        col_widths = c(12, -1, 10, -1, -4, 4, -4),
         tags$div("FAQ", class = "faq-header"),
         bslib::accordion(
           open     = FALSE,

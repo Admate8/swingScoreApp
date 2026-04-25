@@ -1,27 +1,30 @@
-get_df_results_contestant <- function(df_dancers, selected_contestant_id) {
-  df_helper <- df_dancers |>
-    dplyr::filter(contestant_id == selected_contestant_id) |>
-    dplyr::count(role)
 
-  dominant_role <- df_helper$role[which.max(df_helper$n)]
+get_df_dancer_results <- function(df, role, dom_role = TRUE, advancing_divs = TRUE) {
 
-  df_dancers |>
-    dplyr::filter(
-      contestant_id == selected_contestant_id &
-        role == dominant_role &
-        division_adj %in% divisions_advancing
-    ) |>
-    dplyr::arrange(event_date)
+  if (dom_role) {
+    role_selected <- role
+  } else {
+    role_selected <- ifelse(role == "Leader", "Follower", "Leader")
+  }
+
+  if (advancing_divs) {
+    divis <- c("Newcomer", "Novice", "Intermediate", "Advanced", "All-Stars", "Champions")
+  } else {
+    divis <- c("Juniors", "Sophisticated", "Masters")
+  }
+
+
+  df |>
+    dplyr::filter(role == role_selected & division_adj %in% divis) |>
+    dplyr::mutate(division_adj = factor(division_adj, levels = divis)) |>
+    dplyr::arrange(event_date, division_adj)
 }
 
 
+plot_omega_individual <- function(df, role, dom_role = TRUE, advancing_divs = TRUE) {
 
-plot_omega_individual <- function(df_dancers, selected_contestant_id) {
+  df_results_contestant <- get_df_dancer_results(df, role, dom_role, advancing_divs)
 
-  divisions_advancing     <- c("Newcomer", "Novice", "Intermediate", "Advanced", "All-Stars", "Champions")
-  divisions_nonadvancing  <- c("Juniors", "Sophisticated", "Masters")
-  df_results_contestant   <- get_df_results_contestant(df_dancers, selected_contestant_id) |>
-    dplyr::mutate(division_adj = factor(division_adj, levels = divisions_advancing))
 
   df_results_contestant |>
     dplyr::group_by(division_adj) |>
@@ -51,7 +54,7 @@ plot_omega_individual <- function(df_dancers, selected_contestant_id) {
       )
     ) |>
     echarts4r::e_color(
-      color = unname(col_palette$division$advancing[unique(df_results_contestant$division_adj)]),
+      color = unname(col_palette$divisions[as.character(sort(unique(df_results_contestant$division_adj)))]),
       background = col_palette$global$solid_bg
     ) |>
     echarts4r::e_x_axis(
@@ -95,48 +98,77 @@ plot_omega_individual <- function(df_dancers, selected_contestant_id) {
       borderRadius    = 15,
       padding         = 15,
       formatter = htmlwidgets::JS("
-      function(params) {
-        var date     = new Date(params[0].value[0]).toLocaleDateString('en-GB', {year: 'numeric', month: 'long'});
-        var event    = params[0].name;
-        var division = params[0].seriesName;
-        var score    = (parseFloat(params[0].value[1])).toFixed(0);
-        var marker   = params[0].marker;
-        var colour   = params[0].color;
+        function(params) {
+          var base     = params[0] || params[1]; // fallback if first is missing
+          var date     = base && base.value ? new Date(base.value[0]).toLocaleDateString('en-GB', {year: 'numeric', month: 'long'}) : '';
+          var event    = base ? base.name : '';
+          var division = base ? base.seriesName : '';
+          var marker   = base ? base.marker : '';
+          var colour   = base ? base.color : '';
 
-        return '<div style=\"text-align: center; font-size: 1.4em; font-weight: bold; padding-bottom: 15px;\">' +
+          var score1 = (params[0] && params[0].value && params[0].value[1] != null)
+            ? parseFloat(params[0].value[1]).toFixed(0)
+            : null;
+
+          var score2 = (params[1] && params[1].value && params[1].value[1] != null)
+            ? parseFloat(params[1].value[1]).toFixed(0)
+            : null;
+
+          var content =
+            '<div style=\"text-align: center; font-size: 1.4em; font-weight: bold; padding-bottom: 15px;\">' +
               event + '</div>' +
-             '<hr style=\"margin: 4px 0; border: none; border-top: 1px solid #ccc;\" />' +
-             '<div style=\"text-align: center; font-size: 1em;\">' + date + '</div><br>' +
-             '<div style=\"display: flex; justify-content: space-between; align-items: center; margin-top: 4px;\">' +
-             '<div style=\"font-size: 1.2em;\">' + marker + division + '</div>' +
-             '<div style=\"font-size: 1.2em; font-weight: bold; color: ' + colour + ';\">' +
-              score + '\U03A9' + '</div>' +
-             '</div>';
-      }
-    ")
+            '<hr style=\"margin: 4px 0; border: none; border-top: 1px solid #ccc;\" />' +
+            '<div style=\"text-align: center; font-size: 1em;\">' + date + '</div><br>';
+
+          // First line (only if score1 exists)
+          if (score1 !== null) {
+            content +=
+              '<div style=\"display: flex; justify-content: space-between; align-items: center; margin-top: 4px;\">' +
+                '<div style=\"font-size: 1.2em;\">' + marker + division + '</div>' +
+                '<div style=\"font-size: 1.2em; font-weight: bold; color: ' + colour + ';\">' +
+                  score1 + '\u03A9' +
+                '</div>' +
+              '</div>';
+          }
+
+          // Second line (only if score2 exists)
+          if (score2 !== null) {
+            var marker2   = params[1] ? params[1].marker : '';
+            var division2 = params[1] ? params[1].seriesName : '';
+            var colour2   = params[1] ? params[1].color : colour;
+
+            content +=
+              '<div style=\"display: flex; justify-content: space-between; align-items: center; margin-top: 4px;\">' +
+                '<div style=\"font-size: 1.2em;\">' + marker2 + division2 + '</div>' +
+                '<div style=\"font-size: 1.2em; font-weight: bold; color: ' + colour2 + ';\">' +
+                  score2 + '\u03A9' +
+                '</div>' +
+              '</div>';
+          }
+
+          return content;
+        }
+      ")
     ) |>
-    echarts4r::e_grid(right = "7%", left = "5%", top = "15%") |>
+    echarts4r::e_grid(right = "7%", left = "5%", top = "15%", bottom = "7%") |>
     echarts4r::e_legend(show = FALSE) |>
     echarts4r::e_title(
       text      = "Omega Score",
-      subtext   = "reward your performance across all rounds - not just the final!",
+      subtext   = "rewards your performance across all rounds - not just the final!",
       textAlign = "left",
       left      = "5%",
       textStyle = list(color = col_palette$global$font_primary, fontWeight = 300, fontSize = 25),
       subtextStyle = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 12)
     ) |>
-    echarts4r::e_toolbox(show = FALSE) |>
-    get_data_zoom_date()
+    echarts4r::e_toolbox(show = FALSE)
+    #get_data_zoom_date()
 }
 
 
 
-plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
+plot_nonomega_individual <- function(df, role, dom_role = TRUE, advancing_divs = TRUE) {
 
-  divisions_advancing     <- c("Newcomer", "Novice", "Intermediate", "Advanced", "All-Stars", "Champions")
-  divisions_nonadvancing  <- c("Juniors", "Sophisticated", "Masters")
-  df_results_contestant   <- get_df_results_contestant(df_dancers, selected_contestant_id) |>
-    dplyr::mutate(division_adj = factor(division_adj, levels = divisions_advancing))
+  df_results_contestant <- get_df_dancer_results(df, role, dom_role, advancing_divs)
 
   df_results_contestant |>
     dplyr::mutate(p_final = ifelse(is.na(p_final), 0, p_final)) |>
@@ -167,7 +199,7 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
       )
     ) |>
     echarts4r::e_color(
-      color = unname(col_palette$division$advancing[unique(df_results_contestant$division_adj)]),
+      color = unname(col_palette$divisions[as.character(sort(unique(df_results_contestant$division_adj)))]),
       background = col_palette$global$solid_bg
     ) |>
     echarts4r::e_x_axis(
@@ -210,27 +242,59 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
       borderRadius    = 15,
       padding         = 15,
       formatter = htmlwidgets::JS("
-      function(params) {
-        var date     = new Date(params[0].value[0]).toLocaleDateString('en-GB', {year: 'numeric', month: 'long'});
-        var event    = params[0].name;
-        var division = params[0].seriesName;
-        var score    = (parseFloat(params[0].value[1])).toFixed(0);
-        var marker   = params[0].marker;
-        var colour   = params[0].color;
+        function(params) {
+          var base     = params[0] || params[1]; // fallback if first missing
+          var date     = base && base.value ? new Date(base.value[0]).toLocaleDateString('en-GB', {year: 'numeric', month: 'long'}) : '';
+          var event    = base ? base.name : '';
+          var division = base ? base.seriesName : '';
+          var marker   = base ? base.marker : '';
+          var colour   = base ? base.color : '';
 
-        return '<div style=\"text-align: center; font-size: 1.4em; font-weight: bold; padding-bottom: 15px;\">' +
+          var score1 = (params[0] && params[0].value && params[0].value[1] != null)
+            ? parseFloat(params[0].value[1]).toFixed(0)
+            : null;
+
+          var score2 = (params[1] && params[1].value && params[1].value[1] != null)
+            ? parseFloat(params[1].value[1]).toFixed(0)
+            : null;
+
+          var content =
+            '<div style=\"text-align: center; font-size: 1.4em; font-weight: bold; padding-bottom: 15px;\">' +
               event + '</div>' +
-             '<hr style=\"margin: 4px 0; border: none; border-top: 1px solid #ccc;\" />' +
-             '<div style=\"text-align: center; font-size: 1em;\">' + date + '</div><br>' +
-             '<div style=\"display: flex; justify-content: space-between; align-items: center; margin-top: 4px;\">' +
-             '<div style=\"font-size: 1.2em;\">' + marker + division + '</div>' +
-             '<div style=\"font-size: 1.2em; font-weight: bold; color: ' + colour + ';\">' +
-              score + ' WSDC Points' + '</div>' +
-             '</div>';
-      }
+            '<hr style=\"margin: 4px 0; border: none; border-top: 1px solid #ccc;\" />' +
+            '<div style=\"text-align: center; font-size: 1em;\">' + date + '</div><br>';
+
+          // First line
+          if (score1 !== null) {
+            content +=
+              '<div style=\"display: flex; justify-content: space-between; align-items: center; margin-top: 4px;\">' +
+                '<div style=\"font-size: 1.2em;\">' + marker + division + '</div>' +
+                '<div style=\"font-size: 1.2em; font-weight: bold; color: ' + colour + ';\">' +
+                  score1 + ' WSDC Points' +
+                '</div>' +
+              '</div>';
+          }
+
+          // Second line
+          if (score2 !== null) {
+            var marker2   = params[1] ? params[1].marker : '';
+            var division2 = params[1] ? params[1].seriesName : '';
+            var colour2   = params[1] ? params[1].color : colour;
+
+            content +=
+              '<div style=\"display: flex; justify-content: space-between; align-items: center; margin-top: 4px;\">' +
+                '<div style=\"font-size: 1.2em;\">' + marker2 + division2 + '</div>' +
+                '<div style=\"font-size: 1.2em; font-weight: bold; color: ' + colour2 + ';\">' +
+                  score2 + ' WSDC Points' +
+                '</div>' +
+              '</div>';
+          }
+
+          return content;
+        }
     ")
     ) |>
-    echarts4r::e_grid(right = "7%", left = "5%", top = "15%") |>
+    echarts4r::e_grid(right = "10%", left = "5%", top = "15%", bottom = "7%") |>
     echarts4r::e_legend(show = FALSE) |>
     echarts4r::e_title(
       text      = "WSDC Points",
@@ -240,8 +304,12 @@ plot_nonomega_individual <- function(df_dancers, selected_contestant_id) {
       textStyle = list(color = col_palette$global$font_primary, fontWeight = 300, fontSize = 25),
       subtextStyle = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 12)
     ) |>
-    echarts4r::e_toolbox(show = FALSE) |>
-    get_data_zoom_date()
+    echarts4r::e_toolbox(show = FALSE)
+    #get_data_zoom_date()
 }
+
+
+
+# ~-----
 
 

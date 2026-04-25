@@ -44,10 +44,7 @@ app_ui <- function(request) {
           class = "section",
 
           # 2. Indiv Analysis Set-up ----
-          tags$div(
-            class = "slide",
-            ui_individual_analysis_setup
-          ),
+          tags$div(class = "slide", ui_individual_analysis_setup),
 
           tags$div(
             class = "slide"
@@ -59,38 +56,9 @@ app_ui <- function(request) {
         # Section 2
         tags$div(
           class = "section",
-
-          # Slide 1
-          tags$div(
-            class = "slide",
-            div(class = "comparison-container",
-
-                # bottom plot
-                tags$div(
-                  class = "plot-layer echarts-wrap",
-                  echarts4r::echarts4rOutput("plot_nonomega_individual", height = "80vh")
-
-                ),
-
-                # top plot (clipped)
-                tags$div(
-                  class = "plot-layer top-plot echarts-wrap",
-                  echarts4r::echarts4rOutput("plot_omega_individual", height = "80vh")
-
-                ),
-
-                # vertical slider handle
-                div(class = "slider")
-            ) |> tags$div(class = "glass-wrapper")
-          ),
-          # Slide 2
-          tags$div(
-            class = "slide"
-          ),
-          # Slide 3
-          tags$div(
-            class = "slide"
-          )
+          tags$div(class = "slide", ui_individual_analysis_adv_dom),
+          tags$div(class = "slide", ui_individual_analysis_nonadv),
+          tags$div(class = "slide", ui_individual_analysis_nondom)
         ),
 
         # Footer ----
