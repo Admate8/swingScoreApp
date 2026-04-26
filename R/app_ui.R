@@ -53,13 +53,15 @@ app_ui <- function(request) {
 
         ),
 
-        # Section 2
         tags$div(
           class = "section",
           tags$div(class = "slide", ui_individual_analysis_adv_dom),
           tags$div(class = "slide", ui_individual_analysis_nonadv),
           tags$div(class = "slide", ui_individual_analysis_nondom)
         ),
+
+        tags$div(class = "section", ui_individual_analysis_details),
+        tags$div(class = "section", ui_individual_analysis_group),
 
         # Footer ----
         tags$div(

@@ -34,6 +34,23 @@ app_server <- function(input, output, session) {
     df_helper <- df_selected_dancer() |> dplyr::count(role)
     df_helper$role[which.max(df_helper$n)]
   })
+  selected_dancer_currdivision <- reactive({
+    req(input$select_dancer)
+
+    df_helper <- df_selected_dancer() |>
+      dplyr::distinct(division_adj) |>
+      dplyr::mutate(order = dplyr::case_when(
+        division_adj == "Newcomer"     ~ 1,
+        division_adj == "Novice"       ~ 2,
+        division_adj == "Intermediate" ~ 3,
+        division_adj == "Advanced"     ~ 4,
+        division_adj == "All-Stars"    ~ 5,
+        division_adj == "Champions"    ~ 5,
+        TRUE                           ~ NA
+      ))
+    df_helper$division_adj[which.max(df_helper$order)]
+  })
+
 
   # UI selected dancers ----
   output$ui_selected_dancer <- renderUI({
@@ -48,11 +65,12 @@ app_server <- function(input, output, session) {
       tags$div(class = "glass-div-header", dancer),
       tags$div(
         class = "subheader",
-        paste0("You competed the most often as a ", selected_dancer_role())
+        htmltools::HTML(paste0("You competed the most often as a <b>", selected_dancer_role(), "</b>"))
       )
     )
   })
 
+  # Hint notification ----
   debounced_button_dancer_selected <- reactive({
     input$button_dancer_selected
   }) |> debounce(3000)
@@ -98,5 +116,32 @@ app_server <- function(input, output, session) {
     plot_omega_individual(df_selected_dancer(), selected_dancer_role(), FALSE, TRUE)
   })
 
+  # Plot omega details ----
+  ## UI ----
+  output$ui_omega_details <- renderUI({
+    req(input$select_dancer)
 
+    tags$div(
+      tags$div(class = "glass-div-header", "Zooming In"),
+      tags$div(
+        class = "subheader",
+        htmltools::HTML(paste0(
+          "on your highest division - <b>", selected_dancer_currdivision(),
+          "</b> (as determined from the data) as a <b>", selected_dancer_role(), "</b>"
+        ))
+      )
+    )
+  })
+
+  ## Plot ----
+  output$plot_omega_current_division <- echarts4r::renderEcharts4r({
+    req(input$select_dancer)
+    plot_omega_current_division(df_dancers, input$select_dancer, selected_dancer_role(), selected_dancer_currdivision())
+  })
+
+  # Plot omega group ----
+  output$plot_omega_group <- echarts4r::renderEcharts4r({
+    req(input$select_dancer)
+    plot_omega_group(df_dancers, input$select_dancer, selected_dancer_role(), selected_dancer_currdivision())
+  })
 }
