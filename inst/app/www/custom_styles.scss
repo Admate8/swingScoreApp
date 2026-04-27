@@ -6,6 +6,7 @@ $fade_level3: #4F46E5;
 
 $tertiary: #c7d2fe;
 $primary_light: #a594f9;
+$solid_bg: #202946;
 
 
 .customFooter{
@@ -429,7 +430,7 @@ $primary_light: #a594f9;
   animation-timing-function: ease-out;
 }
 
- .accordion .accordion-item:nth-child(odd) {
+.accordion .accordion-item:nth-child(odd) {
   animation-name: slideInFromLeft;
 }
 
@@ -465,7 +466,7 @@ $primary_light: #a594f9;
 
 .accordion-button {
   background: transparent;
-  color: #E2E8f0;
+  color: $body_color;
   border: none;
   padding: 0.625rem 0.9375rem;
   font-weight: 200;
@@ -498,6 +499,29 @@ $primary_light: #a594f9;
   border-top: 1px solid rgba($primary, 0.2);
   overflow-wrap: break-word;
 }
+
+.fp-overflow #acc_questions .accordion-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $solid_bg;
+  border-radius: 0.75rem;
+}
+
+#acc_questions .accordion-button {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: $primary_light;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+}
+
+
+/* Ensure the slide section allows scrolling */
+.fp-overflow {
+  overflow-y: auto !important;
+}
+
 
 //// FAQ Header
 .faq-header {

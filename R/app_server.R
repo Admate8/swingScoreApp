@@ -18,6 +18,7 @@ app_server <- function(input, output, session) {
   #
   # on.exit(DBI::dbDisconnect(db_con))
 
+  # ~ ----
   # Table event details ----
   output$table_event_details <- reactable::renderReactable({
     table_event_details(df_events, df_subevents, df_comps)
@@ -95,8 +96,11 @@ app_server <- function(input, output, session) {
   })
 
 
-  # Plots omega change ----
-  ## Dominant role
+
+  # ~ ----
+  # Individual Analysis ----
+  ## Plots omega change ----
+  ### Dominant role
   output$plot_nonomega_individual <- echarts4r::renderEcharts4r({
     req(input$select_dancer)
     plot_nonomega_individual(df_selected_dancer(), selected_dancer_role(), TRUE, TRUE)
@@ -105,19 +109,19 @@ app_server <- function(input, output, session) {
     req(input$select_dancer)
     plot_omega_individual(df_selected_dancer(), selected_dancer_role(), TRUE, TRUE)
   })
-  ## Age divisions
+  ### Age divisions
   output$plot_omega_individual_nonadv <- echarts4r::renderEcharts4r({
     req(input$select_dancer)
     plot_omega_individual(df_selected_dancer(), selected_dancer_role(), TRUE, FALSE)
   })
-  ## Non-dominant role
+  ### Non-dominant role
   output$plot_omega_individual_nondom <- echarts4r::renderEcharts4r({
     req(input$select_dancer)
     plot_omega_individual(df_selected_dancer(), selected_dancer_role(), FALSE, TRUE)
   })
 
-  # Plot omega details ----
-  ## UI ----
+  ## Plot omega details ----
+  ### UI
   output$ui_omega_details <- renderUI({
     req(input$select_dancer)
 
@@ -133,15 +137,30 @@ app_server <- function(input, output, session) {
     )
   })
 
-  ## Plot ----
+  ### Plot
   output$plot_omega_current_division <- echarts4r::renderEcharts4r({
     req(input$select_dancer)
     plot_omega_current_division(df_dancers, input$select_dancer, selected_dancer_role(), selected_dancer_currdivision())
   })
 
-  # Plot omega group ----
+  ## Plot omega group ----
   output$plot_omega_group <- echarts4r::renderEcharts4r({
     req(input$select_dancer)
     plot_omega_group(df_dancers, input$select_dancer, selected_dancer_role(), selected_dancer_currdivision())
+  })
+
+
+
+  # ~ ----
+  # Competition Analysis ----
+  ## Comps Summary ----
+  output$plot_active_dancers_prop <- echarts4r::renderEcharts4r({
+    plot_active_dancers_prop(df_placement_counts)
+  })
+  output$table_all_dancers_summary <- reactable::renderReactable({
+    table_dancers_summary(get_df_dancers_summary(df_placement_counts)$df_all_dancers)
+  })
+  output$table_active_dancers_summary <- reactable::renderReactable({
+    table_dancers_summary(get_df_dancers_summary(df_placement_counts)$df_active_dancers)
   })
 }

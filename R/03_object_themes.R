@@ -13,7 +13,7 @@ custom_reactable_theme <- reactable::reactableTheme(
 
   tableStyle           = list(borderRadius = "1rem"),
   headerStyle          = list(
-    color            = "rgba(165, 148, 249, 0.6)",
+    color            = scales::alpha(col_palette$global$primary_light, 0.6),
     background       = col_palette$global$solid_bg,
     fontWeight       = 400,
     fontSize         = "0.7rem",
