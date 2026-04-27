@@ -153,7 +153,7 @@ app_server <- function(input, output, session) {
 
   # ~ ----
   # Competition Analysis ----
-  ## Comps Summary ----
+  ## Comps summary ----
   output$plot_active_dancers_prop <- echarts4r::renderEcharts4r({
     plot_active_dancers_prop(df_placement_counts)
   })
@@ -162,5 +162,10 @@ app_server <- function(input, output, session) {
   })
   output$table_active_dancers_summary <- reactable::renderReactable({
     table_dancers_summary(get_df_dancers_summary(df_placement_counts)$df_active_dancers)
+  })
+
+  ## Events over time ----
+  output$plot_events_over_time <- reactable::renderReactable({
+    plot_events_over_time(df_all_events)
   })
 }

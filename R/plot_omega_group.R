@@ -1,7 +1,7 @@
 plot_omega_group <- function(df_full, selected_contestant_id, current_role, current_division) {
 
   df_grouped_contestants <- get_df_omega_current_division(df_full, selected_contestant_id, current_role, current_division)$df_grouped_contestants
-  col_division           <- unname(unlist(col_palette$divisions[unique(df_contestant_scatter$division_adj)]))
+  col_division           <- unname(unlist(col_palette$divisions[unique(df_grouped_contestants$division_adj)]))
 
   df_grouped_contestants |>
     dplyr::group_by(contestant_id) |>

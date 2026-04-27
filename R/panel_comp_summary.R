@@ -1,9 +1,10 @@
 penel_comp_summary <- htmltools::tagList(
   bslib::layout_columns(
     col_widths = c(4, 4, 4, 6, 6),
+    class = "align-items-center",
 
     tags$div(
-      style = "text-align: justify;",
+      style = "text-align: justify;padding:1rem;",
       tags$p(
         "It's difficult to determine what proportion of all dancers choose to
       compete without data on the total number of participants across events.
@@ -28,7 +29,7 @@ penel_comp_summary <- htmltools::tagList(
     echarts4r::echarts4rOutput("plot_active_dancers_prop", height = "40vh") |> add_spinner(),
 
     tags$div(
-      style = "text-align: justify;",
+      style = "text-align: justify;padding:1rem;",
       tags$p(
         "For this reason, we define an ", tags$em("active competitor"), " as a dancer who has
         earned at least one WSDC point in the past three years. This definition
@@ -60,7 +61,5 @@ penel_comp_summary <- htmltools::tagList(
       br(),
       reactable::reactableOutput("table_active_dancers_summary") |> add_spinner()
     )
-
-
   )
 )

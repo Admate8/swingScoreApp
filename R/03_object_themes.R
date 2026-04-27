@@ -41,7 +41,19 @@ custom_reactable_theme <- reactable::reactableTheme(
 
 # 2. Echarts theme --------------------------------------------------------
 
-get_data_zoom_date <- function(echart) {
+get_data_zoom_date <- function(echart, date = TRUE) {
+
+  if (date) {
+    custom_formatter <- htmlwidgets::JS(
+      "function(value, valueStr) {
+          let current_date = new Date(valueStr);
+          return current_date.toLocaleDateString('en-GB', {year: 'numeric', month: 'short'});
+        }"
+    )
+  } else {
+    custom_formatter <- htmlwidgets::JS("function(value, valueStr) { return value; }")
+  }
+
   echart |>
     echarts4r::e_datazoom(
       type            = "slider",
@@ -50,12 +62,7 @@ get_data_zoom_date <- function(echart) {
       borderColor     = scales::alpha(col_palette$global$secondary, 0.25),
       backgroundColor = scales::alpha(col_palette$global$secondary, 0.05),
       fillerColor     = scales::alpha(col_palette$global$secondary, 0.12),
-      labelFormatter  = htmlwidgets::JS(
-        "function(value, valueStr) {
-          let current_date = new Date(valueStr);
-          return current_date.toLocaleDateString('en-GB', {year: 'numeric', month: 'short'});
-        }"
-      ),
+      labelFormatter  = custom_formatter,
       handleStyle = list(
         color       = scales::alpha(col_palette$global$secondary, 0.5),
         borderColor = col_palette$global$secondary,
