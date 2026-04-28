@@ -182,5 +182,8 @@ app_server <- function(input, output, session) {
   output$plot_average_perc_in_final <- reactable::renderReactable({
     plot_average_perc_in_final(df_comps_avgs())
   })
+  output$plot_average_f_t_l_ratio <- reactable::renderReactable({
+    plot_average_f_t_l_ratio(df_comps_avgs())
+  })
 
 }

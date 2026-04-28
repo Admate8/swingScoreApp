@@ -18,12 +18,8 @@ ui_competitive_analysis <- htmltools::tagList(
       panel_competitors_over_time
     ),
     bslib::accordion_panel(
-      title = "How many leaders and followers does an average competition have in each division? And how many make it to the finals?",
+      title = "How many leaders and followers does an average competition have in each division? And how many make it to the finals? What is the average follower-to-leader ratio by division?",
       penel_average_competition
-    ),
-    bslib::accordion_panel(
-      title = "What is the follower-to-leader ratio by division?",
-      lorem::ipsum(20)
     ),
     bslib::accordion_panel(
       title = "How long does it take to progress to the next division?",

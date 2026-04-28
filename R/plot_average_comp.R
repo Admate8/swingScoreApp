@@ -181,7 +181,7 @@ plot_average_comp_size <- function(df_comps_avgs) {
       inactiveColor     = scales::alpha(col_palette$global$secondary, 0.15),
       inactiveBorderColor = scales::alpha(col_palette$global$secondary, 0.1),
     ) |>
-    echarts4r::e_grid(left = "5%", right = "10%", bottom = "5%", top = "5%")
+    echarts4r::e_grid(left = "5%", right = "5%", bottom = "5%", top = "5%")
 }
 
 
@@ -296,5 +296,66 @@ plot_average_perc_in_final <- function(df_comps_avgs) {
       inactiveColor     = scales::alpha(col_palette$global$secondary, 0.15),
       inactiveBorderColor = scales::alpha(col_palette$global$secondary, 0.1),
     ) |>
-    echarts4r::e_grid(left = "5%", right = "10%", bottom = "5%", top = "5%")
+    echarts4r::e_grid(left = "5%", right = "5%", bottom = "5%", top = "5%")
+}
+
+
+plot_average_f_t_l_ratio <- function(df_comps_avgs) {
+
+  df_comps_avgs |>
+    echarts4r::e_chart(x = division) |>
+    echarts4r::e_scatter(
+      serie = f_t_l_ratio, bind = event_name, symbol_size = 7,
+      color = scales::alpha(col_palette$global$primary, 0.2),
+      name  = "Follower-to-Leader Ratio",
+      tooltip = list(valueFormatter = htmlwidgets::JS("
+      function(value) {return parseFloat(value).toFixed(2);}
+    "))
+    ) |>
+    echarts4r::e_jitter() |>
+    echarts4r::e_data(
+      df_comps_avgs |> dplyr::distinct(division, avg_f_t_l_ratio)
+    ) |>
+    echarts4r::e_line(
+      serie = avg_f_t_l_ratio,
+      symbol = "circle", name  = "Follower-to-Leader Ratio", symbolSize = 10,
+      color = col_palette$global$primary,
+      lineStyle = list(width = 0),
+      label = list(
+        show = TRUE, color = "inherit", fontWeight = "bolder", fontSize = 15,
+        formatter = htmlwidgets::JS("
+      function(params) {return parseFloat(params.value).toFixed(2);}
+    ")
+      ),
+      tooltip = list(valueFormatter = htmlwidgets::JS("
+      function(value) {return 'mean: ' + parseFloat(value).toFixed(2);}
+    "))
+    ) |>
+    echarts4r::e_legend(show = FALSE) |>
+    echarts4r::e_x_axis(
+      axisLine  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      axisLabel = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 11, fontWeight = 300)
+    ) |>
+    echarts4r::e_y_axis(
+      name         = "Follower-to-Leader Ratio",
+      nameLocation = "middle",
+      axisLabel = list(color = scales::alpha(col_palette$global$primary_light, 0.5), fontSize = 11, fontWeight = 300),
+      axisLine  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.5))),
+      axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
+      splitLine = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.1), type = "dashed"))
+    ) |>
+    echarts4r::e_flip_coords() |>
+    echarts4r::e_tooltip(
+      backgroundColor = scales::alpha(col_palette$global$tooltip_bg, 0.92),
+      borderColor     = scales::alpha(col_palette$global$secondary, 0.25),
+      textStyle       = list(color = col_palette$global$tertiary, fontSize = 12, fontWeight = 300),
+      extraCssText    = paste0(
+        "backdrop-filter:blur(10px);",
+        "box-shadow:0 0 20px ", scales::alpha(col_palette$global$secondary, 0.2), ";"
+      ),
+      borderRadius    = 15,
+      padding         = 15
+    ) |>
+    echarts4r::e_grid(left = "5%", right = "5%", bottom = "5%", top = "5%")
 }

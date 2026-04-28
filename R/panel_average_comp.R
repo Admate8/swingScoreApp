@@ -79,6 +79,46 @@ penel_average_competition <- htmltools::tagList(
           )
         )
       )
-    )
+    ),
+
+    tags$div(
+      tags$div("Follower-to-Leader Ratio", class = "glass-div-header", style = "font-size:1.2rem;text-align:left;"),
+      tags$div(
+        style = "text-align: justify;padding:1rem;",
+        tags$p(
+          "As with the percentage of finalists, we can calculate the average
+          follower-to-leader ratio for each division. The chart on the right
+          presents these results."
+        ),
+        tags$p(
+          "A ratio of 2 means that, on average, there are two followers for every
+          leader - in other words, the higher the ratio, the greater the imbalance
+          in favour of followers. A ratio of 1 would indicate a perfectly balanced
+          field (the dream!)."
+        ),
+        tags$p(
+          "One note: this is not the same as calculating the follower-to-leader
+          ratio of the average competition in each division. Here, ratios are
+          computed at the competition level first and then averaged, so you
+          can't reproduce these numbers directly from the earlier chart."
+        ),
+        tags$div("Observations", class = "glass-div-header", style = "font-size:1.2rem;text-align:left;"),
+        tags$ul(
+          tags$li(
+            "In almost all divisions, the follower-to-leader ratio is greater than 1,
+            confirming that there are typically more followers than leaders."
+          ),
+          tags$li(
+            "Among the skill divisions, Newcomer has the highest ratio and Champions
+            the lowest. The ratio generally decreases as the division level increases,
+            likely because the imbalance is less pronounced at higher levels."
+          ),
+          tags$li(
+            "Among the age divisions, Juniors are heavily skewed towards followers."
+          )
+        )
+      )
+    ),
+    echarts4r::echarts4rOutput("plot_average_f_t_l_ratio", height = "55vh") |> add_spinner()
   )
 )

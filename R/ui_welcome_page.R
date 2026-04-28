@@ -16,7 +16,7 @@ ui_welcome_page <- htmltools::tagList(
     actionButton(
       inputId = "button_go_group",
       label   = label_button_group_analysis,
-      onclick = "fullpage_api.silentMoveTo(2, 1);",
+      onclick = "fullpage_api.moveTo(2, 1);",
       class   = "btn-glow",
       style   = "font-size: 1.5rem;"
     )
