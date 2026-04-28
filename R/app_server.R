@@ -168,4 +168,9 @@ app_server <- function(input, output, session) {
   output$plot_events_over_time <- reactable::renderReactable({
     plot_events_over_time(df_all_events)
   })
+
+  ## Competitors over time ----
+  output$plot_comp_size_overtime <- reactable::renderReactable({
+    plot_comp_size_overtime(df_comps, df_events)
+  })
 }

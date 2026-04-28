@@ -15,7 +15,7 @@ ui_competitive_analysis <- htmltools::tagList(
     ),
     bslib::accordion_panel(
       title = "Is competing becoming more popular?",
-      lorem::ipsum(20)
+      panel_competitors_over_time
     ),
     bslib::accordion_panel(
       title = "How many leaders and followers does an average competition have in each division? And how many make it to the finals?",
