@@ -51,7 +51,7 @@ get_data_zoom_date <- function(echart, date = TRUE) {
         }"
     )
   } else {
-    custom_formatter <- htmlwidgets::JS("function(value, valueStr) { return value; }")
+    custom_formatter <- htmlwidgets::JS("function(value, valueStr) { return value.toFixed(0); }")
   }
 
   echart |>

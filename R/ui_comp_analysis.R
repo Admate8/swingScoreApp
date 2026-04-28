@@ -19,7 +19,7 @@ ui_competitive_analysis <- htmltools::tagList(
     ),
     bslib::accordion_panel(
       title = "How many leaders and followers does an average competition have in each division? And how many make it to the finals?",
-      lorem::ipsum(20)
+      penel_average_competition
     ),
     bslib::accordion_panel(
       title = "What is the follower-to-leader ratio by division?",

@@ -173,4 +173,14 @@ app_server <- function(input, output, session) {
   output$plot_comp_size_overtime <- reactable::renderReactable({
     plot_comp_size_overtime(df_comps, df_events)
   })
+
+  ## Average competition plots ----
+  df_comps_avgs <- reactive({get_df_average_comp(df_comps, df_events)})
+  output$plot_average_comp_size <- reactable::renderReactable({
+    plot_average_comp_size(df_comps_avgs())
+  })
+  output$plot_average_perc_in_final <- reactable::renderReactable({
+    plot_average_perc_in_final(df_comps_avgs())
+  })
+
 }
