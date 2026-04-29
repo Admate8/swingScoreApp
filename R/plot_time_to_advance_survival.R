@@ -114,6 +114,53 @@ get_df_survival <- function(df_first_final) {
 }
 
 
+anova_results <- function(df_first_final) {
+
+  df_survival <- get_df_survival(df_first_final)
+
+  # 1. Fit the Cox model
+  ## role * progress            - allows role effect to differ by division
+  ## survival::strata(progress) - allows each division its own baseline hazard
+  ## survival::cluster(id)      - accounts for repeated observations per dancer
+
+  ## hazard = probability of getting promoted right now, given not promoted yet
+  ## strata = each division has its own risk curve, i.e. no coefficients
+  cox_survival_model <- survival::coxph(
+    survival::Surv(months, advancement_flag) ~ role * progress + survival::strata(progress) + survival::cluster(id),
+    data = df_survival
+  )
+
+  # 2. Fit ANOVA
+  cox_survival_model_for_anova <- survival::coxph(
+    survival::Surv(months, advancement_flag) ~ role * progress + survival::strata(progress),
+    data = df_survival
+  )
+
+  anova_fit <- stats::anova(cox_survival_model_for_anova) |> broom::tidy()
+
+  get_info_from_anova <- function(row, column) {
+    val <- anova_fit[anova_fit$term == row,][[column]]
+    round(val, 2)
+  }
+  anova_role_significant <- ifelse(
+    get_info_from_anova("role", "p.value") <= 0.05,
+    "are", "are no"
+  )
+  anova_role_division_significant <- ifelse(
+    get_info_from_anova("role:progress", "p.value") <= 0.05,
+    "is", "is no"
+  )
+
+  withMathJax(htmltools::HTML(paste0(
+    "<ul>
+      <li>There <b>", anova_role_significant, "</b> significant differences in advancement rates between roles
+      (\\(\\chi^2\\)(", get_info_from_anova("role", "df"), ") = ", get_info_from_anova("role", "statistic"), ", p = ", get_info_from_anova("role", "p.value"), ").</li>
+      <li>There <b>", anova_role_division_significant, "</b> statistical evidence that the effect of role in the division progression varies across divisions
+      (interaction test: \\(\\chi^2\\)(", get_info_from_anova("role:progress", "df"), ") = ", get_info_from_anova("role:progress", "statistic"), ", p = ", get_info_from_anova("role:progress", "p.value"), ").</li>
+    </ul>"
+  )))
+}
+
 
 plot_median_difference <- function(df_first_final) {
 

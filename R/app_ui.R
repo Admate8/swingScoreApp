@@ -10,6 +10,7 @@ app_ui <- function(request) {
 
     bslib::page_fluid(
       theme = app_theme,
+      withMathJax(),
       tags$div(
         id = "fullpage",
 
