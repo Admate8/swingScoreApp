@@ -23,7 +23,7 @@ ui_competitive_analysis <- htmltools::tagList(
     ),
     bslib::accordion_panel(
       title = "How long does it take to progress to the next division?",
-      lorem::ipsum(20)
+      penel_time_to_advance
     ),
     bslib::accordion_panel(
       title = "Is it easier to progress as a Leader than as a Follower?",

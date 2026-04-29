@@ -168,25 +168,7 @@ plot_events_over_time <- function(df) {
       axisTick  = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.25))),
       splitLine = list(lineStyle = list(color = scales::alpha(col_palette$global$secondary, 0.1), type = "dashed"))
     ) |>
-    echarts4r::e_legend(
-      top = "top", left = "center",
-      textStyle = list(
-        color        = scales::alpha(col_palette$global$primary_light, 0.6),
-        fontSize     = 12,
-        fontWeight   = 300,
-        fontFamily   = "system-ui, sans-serif"
-      ),
-      itemWidth   = 14,
-      itemHeight  = 6,
-      itemGap     = 16,
-      itemStyle = list(
-        borderWidth = 0,
-        shadowColor = "rgba(165,180,252,0.35)",
-        shadowBlur  = 6
-      ),
-      inactiveColor     = scales::alpha(col_palette$global$secondary, 0.15),
-      inactiveBorderColor = scales::alpha(col_palette$global$secondary, 0.1),
-    ) |>
+    get_echart_legend() |>
     echarts4r::e_grid(left = "5%", right = "10%", bottom = "15%") |>
     get_data_zoom_date() |>
     echarts4r::e_toolbox(show = FALSE)

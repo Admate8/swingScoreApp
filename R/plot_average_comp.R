@@ -162,25 +162,7 @@ plot_average_comp_size <- function(df_comps_avgs) {
       borderRadius    = 15,
       padding         = 15
     ) |>
-    echarts4r::e_legend(
-      top = "top", left = "center",
-      textStyle = list(
-        color        = scales::alpha(col_palette$global$primary_light, 0.6),
-        fontSize     = 12,
-        fontWeight   = 300,
-        fontFamily   = "system-ui, sans-serif"
-      ),
-      itemWidth   = 14,
-      itemHeight  = 10,
-      itemGap     = 16,
-      itemStyle = list(
-        borderWidth = 0,
-        shadowColor = "rgba(165,180,252,0.35)",
-        shadowBlur  = 6
-      ),
-      inactiveColor     = scales::alpha(col_palette$global$secondary, 0.15),
-      inactiveBorderColor = scales::alpha(col_palette$global$secondary, 0.1),
-    ) |>
+    get_echart_legend() |>
     echarts4r::e_grid(left = "5%", right = "5%", bottom = "5%", top = "5%")
 }
 
@@ -277,25 +259,7 @@ plot_average_perc_in_final <- function(df_comps_avgs) {
       borderRadius    = 15,
       padding         = 15
     ) |>
-    echarts4r::e_legend(
-      top = "top", left = "center",
-      textStyle = list(
-        color        = scales::alpha(col_palette$global$primary_light, 0.6),
-        fontSize     = 12,
-        fontWeight   = 300,
-        fontFamily   = "system-ui, sans-serif"
-      ),
-      itemWidth   = 14,
-      itemHeight  = 10,
-      itemGap     = 16,
-      itemStyle = list(
-        borderWidth = 0,
-        shadowColor = "rgba(165,180,252,0.35)",
-        shadowBlur  = 6
-      ),
-      inactiveColor     = scales::alpha(col_palette$global$secondary, 0.15),
-      inactiveBorderColor = scales::alpha(col_palette$global$secondary, 0.1),
-    ) |>
+    get_echart_legend() |>
     echarts4r::e_grid(left = "5%", right = "5%", bottom = "5%", top = "5%")
 }
 

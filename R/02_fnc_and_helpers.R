@@ -49,3 +49,20 @@ get_hex_colour_shade <- function(hex_color, factor = 0.2) {
   }
 }
 
+
+js_convert_to_year_months <- "function formatMonths(months) {
+  const years = Math.floor(months / 12);
+  const rem = months % 12;
+
+  const parts = [];
+
+  if (years > 0) {
+    parts.push(`${years} year${years > 1 ? 's' : ''}`);
+  }
+
+  if (rem > 0) {
+    parts.push(`${rem} month${rem > 1 ? 's' : ''}`);
+  }
+
+  return parts.length > 0 ? parts.join(', ') : 'Not Applicable';
+}"

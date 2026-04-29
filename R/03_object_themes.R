@@ -41,7 +41,7 @@ custom_reactable_theme <- reactable::reactableTheme(
 
 # 2. Echarts theme --------------------------------------------------------
 
-get_data_zoom_date <- function(echart, date = TRUE) {
+get_data_zoom_date <- function(echart, date = TRUE, ...) {
 
   if (date) {
     custom_formatter <- htmlwidgets::JS(
@@ -87,6 +87,32 @@ get_data_zoom_date <- function(echart, date = TRUE) {
         handleStyle     = list(borderColor = col_palette$global$tertiary, shadowBlur = 10),
         moveHandleStyle = list(color = scales::alpha(col_palette$global$secondary, 0.5))
       ),
-      textStyle = list(color = scales::alpha(col_palette$global$secondary, 0.5), fontSize = 10)
+      textStyle = list(color = scales::alpha(col_palette$global$secondary, 0.5), fontSize = 10),
+      ...
+    )
+}
+
+
+get_echart_legend <- function(echart, ...) {
+  echart |>
+    echarts4r::e_legend(
+      top = "top", left = "center",
+      textStyle = list(
+        color        = scales::alpha(col_palette$global$primary_light, 0.6),
+        fontSize     = 12,
+        fontWeight   = 300,
+        fontFamily   = "system-ui, sans-serif"
+      ),
+      itemWidth   = 14,
+      itemHeight  = 10,
+      itemGap     = 16,
+      itemStyle = list(
+        borderWidth = 0,
+        shadowColor = "rgba(165,180,252,0.35)",
+        shadowBlur  = 6
+      ),
+      inactiveColor     = scales::alpha(col_palette$global$secondary, 0.15),
+      inactiveBorderColor = scales::alpha(col_palette$global$secondary, 0.1),
+      ...
     )
 }

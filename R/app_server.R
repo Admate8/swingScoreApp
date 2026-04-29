@@ -186,4 +186,17 @@ app_server <- function(input, output, session) {
     plot_average_f_t_l_ratio(df_comps_avgs())
   })
 
+  ## Time to advance plots ----
+  output$plot_time_to_progress <- reactable::renderReactable({
+    plot_time_to_progress(df_first_final)
+  })
+  output$plot_median_difference <- reactable::renderReactable({
+    plot_median_difference(df_first_final)
+  })
+  output$plot_time_to_advance_survival <- reactable::renderReactable({
+    plot_time_to_advance_survival(df_first_final)
+  })
+
+
+
 }
