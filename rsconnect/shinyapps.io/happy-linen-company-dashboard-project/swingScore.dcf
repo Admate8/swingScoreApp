@@ -1,0 +1,10 @@
+name: swingScore
+title: swingScore
+username: happy-linen-company-dashboard-project
+account: happy-linen-company-dashboard-project
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17260585
+bundleId: 11926540
+url: https://personal-projects-prod.shinyapps.io/swingScore/
+version: 1
