@@ -1,4 +1,4 @@
-get_df_event_details <- function(df_events, df_subevents) {
+get_df_event_details <- function(df_events, df_subevents, df_comps) {
 
   df_subevents  <- df_subevents |>
     dplyr::filter(!(division %in% c("Juniors Newcomer", "Masters Novice"))) |>
@@ -109,7 +109,7 @@ get_df_event_details_subtable <- function(df_comps) {
 
 table_event_details <- function(df_events, df_subevents, df_comps) {
 
-  df_events_table        <- get_df_event_details(df_events, df_subevents)
+  df_events_table        <- get_df_event_details(df_events, df_subevents, df_comps)
   df_events_subtable     <- get_df_event_details_subtable(df_comps)
   divisions_advancing    <- c("Newcomer", "Novice", "Intermediate", "Advanced", "All-Stars", "Champions")
   divisions_nonadvancing <- c("Juniors", "Sophisticated", "Masters")

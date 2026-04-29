@@ -7,16 +7,63 @@
 app_server <- function(input, output, session) {
 
   # Load Data ----
-  # db_con <- DBI::dbConnect(
-  #   RPostgres::Postgres(),
-  #   host     = Sys.getenv("NEON_HOST"),
-  #   dbname   = Sys.getenv("NEON_DBNAME"),
-  #   user     = Sys.getenv("NEON_USER"),
-  #   password = Sys.getenv("NEON_PASSWORD")
-  # )
-  # df_all_events <- DBI::dbGetQuery(db_con, "SELECT * FROM df_all_events")
-  #
-  # on.exit(DBI::dbDisconnect(db_con))
+  db_con <- DBI::dbConnect(
+    RPostgres::Postgres(),
+    host     = Sys.getenv("NEON_HOST"),
+    dbname   = Sys.getenv("NEON_DBNAME"),
+    user     = Sys.getenv("NEON_USER"),
+    password = Sys.getenv("NEON_PASSWORD")
+  )
+  df_all_events       <- DBI::dbGetQuery(db_con, "SELECT * FROM df_all_events")
+  df_events           <- DBI::dbGetQuery(db_con, "SELECT * FROM df_events")
+  df_subevents        <- DBI::dbGetQuery(db_con, "SELECT * FROM df_subevents")
+  df_dancers          <- DBI::dbGetQuery(db_con, "SELECT * FROM df_dancers") |>
+    dplyr::mutate(contestant_id = paste0(contestant, "_", wsdc_id)) |>
+    dplyr::left_join(
+      df_events |> dplyr::distinct(event_id, event_date, event_name),
+      by = "event_id"
+    )
+  df_first_final      <- DBI::dbGetQuery(db_con, "SELECT * FROM df_first_final")
+  df_placement_counts <- DBI::dbGetQuery(db_con, "SELECT * FROM df_placement_counts")
+  df_comps            <- DBI::dbGetQuery(db_con, "SELECT * FROM df_competitions")
+
+  on.exit(DBI::dbDisconnect(db_con))
+
+
+  # Picker for dancer options
+  output$pickerInput_dancer <- renderUI({
+
+    df_helper <- df_dancers |>
+      dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
+      dplyr::distinct(contestant, wsdc_id, contestant_id) |>
+      dplyr::arrange(contestant)
+
+    shinyWidgets::pickerInput(
+      inputId    = "select_dancer",
+      label      = NULL,
+      selected   = NULL,
+      multiple   = FALSE,
+      width      = "25rem",
+      choices    = stats::setNames(
+        df_helper |> dplyr::pull(contestant_id),
+        df_helper |> dplyr::pull(contestant)
+      ),
+      choicesOpt = list(
+        subtext = paste0(
+          "(", df_helper |> dplyr::pull(wsdc_id), ")"
+        )
+      ),
+      options = shinyWidgets::pickerOptions(
+        size                = 3,
+        liveSearch          = TRUE,
+        liveSearchNormalize = TRUE,
+        liveSearchStyle     = "contains",
+        noneResultsText     = "No matches...",
+        showSubtext         = TRUE,
+        title               = "Select your name or WSDC ID..."
+      )
+    )
+  })
 
   # ~ ----
   # Table event details ----
@@ -197,6 +244,40 @@ app_server <- function(input, output, session) {
     plot_time_to_advance_survival(df_first_final)
   })
 
+  ## Panel anova testing ----
+  output$penel_anova_testing <- renderUI({
+    htmltools::tagList(
+      bslib::layout_columns(
+        col_widths = c(-1, 10, -1),
 
+        tags$div(
+          style = "text-align: justify;padding:1rem;",
+          tags$p(
+            "When we looked at the simple medians in the previous question, we didn't see
+            meaningful differences between roles. We then combined roles for the more
+            advanced Kaplan-Meier analysis. So the question remains: if we account for
+            dancers who stay in a division for a long time - or never leave it at all - can
+            we say whether it is easier to progress as a Leader or as a Follower?"
+          ),
+          tags$p(
+            "Without going too far into the technical details, we can answer this
+        using a ", tags$a(
+          "Cox proportional hazards model",
+          href = "https://en.wikipedia.org/wiki/Proportional_hazards_model",
+          target = "_blank"
+        ), ", stratified by division and adjusted for repeated observations.
+        Don't worry about the methodology itself - those curious can find the
+        statistical test results in parentheses. Overall:"
+          ),
+        anova_results(df_first_final),
+        tags$p(
+          "In other words, we have no evidence to suggest that the time it takes
+        to progress to the next division differs between Leaders and Followers - we're
+        all on the same boat!"
+        )
+        )
+      )
+    )
+  })
 
 }

@@ -5,45 +5,10 @@ ui_individual_analysis_setup <- bslib::layout_columns(
     class = "d-flex align-items-center justify-content-center h-100",
     tags$div(
       class = "w-100",
-      shinyWidgets::pickerInput(
-        inputId    = "select_dancer",
-        label      = NULL,
-        selected   = NULL,
-        multiple   = FALSE,
-        width      = "25rem",
-        choices    = stats::setNames(
-          df_dancers |>
-            dplyr::distinct(contestant, wsdc_id, contestant_id) |>
-            dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
-            dplyr::arrange(contestant) |>
-            dplyr::pull(contestant_id),
-          df_dancers |>
-            dplyr::distinct(contestant, wsdc_id, contestant_id) |>
-            dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
-            dplyr::arrange(contestant) |>
-            dplyr::pull(contestant)
-        ),
-        choicesOpt = list(
-          subtext = paste0(
-            "(",
-            df_dancers |>
-              dplyr::distinct(contestant, wsdc_id) |>
-              dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
-              dplyr::arrange(contestant) |>
-              dplyr::pull(wsdc_id),
-            ")"
-          )
-        ),
-        options = shinyWidgets::pickerOptions(
-          size                = 3,
-          liveSearch          = TRUE,
-          liveSearchNormalize = TRUE,
-          liveSearchStyle     = "contains",
-          noneResultsText     = "No matches...",
-          showSubtext         = TRUE,
-          title               = "Select your name or WSDC ID..."
-        )
-      ) |> tags$div(style = "display: flex; justify-content: center; margin-top: 1rem;"),
+      tags$div(
+        style = "display: flex; justify-content: center; margin-top: 1rem;",
+        uiOutput("pickerInput_dancer") |> add_spinner()
+      ),
       br(),
       bslib::layout_columns(
         col_widths = c(12, -1, 10, -1, -4, 4, -4),

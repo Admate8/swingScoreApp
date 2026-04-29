@@ -27,7 +27,7 @@ ui_competitive_analysis <- htmltools::tagList(
     ),
     bslib::accordion_panel(
       title = "Is it easier to progress as a Leader than as a Follower?",
-      penel_anova_testing
+      uiOutput("penel_anova_testing")
     )
   )
 )
