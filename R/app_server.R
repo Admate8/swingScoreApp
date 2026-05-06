@@ -7,21 +7,21 @@
 app_server <- function(input, output, session) {
 
   # Load Data ----
-  # db_con <- DBI::dbConnect(
-  #   RPostgres::Postgres(),
-  #   host     = Sys.getenv("NEON_HOST"),
-  #   dbname   = Sys.getenv("NEON_DBNAME"),
-  #   user     = Sys.getenv("NEON_USER"),
-  #   password = Sys.getenv("NEON_PASSWORD")
-  # )
   db_con <- DBI::dbConnect(
     RPostgres::Postgres(),
-    host     = db_host,
-    user     = db_user,
-    password = db_password,
-    port     = 5432,
-    dbname   = db_name
+    host     = Sys.getenv("NEON_HOST"),
+    dbname   = Sys.getenv("NEON_DBNAME"),
+    user     = Sys.getenv("NEON_USER"),
+    password = Sys.getenv("NEON_PASSWORD")
   )
+  # db_con <- DBI::dbConnect(
+  #   RPostgres::Postgres(),
+  #   host     = db_host,
+  #   user     = db_user,
+  #   password = db_password,
+  #   port     = 5432,
+  #   dbname   = db_name
+  # )
 
   df_all_events       <- DBI::dbGetQuery(db_con, "SELECT * FROM df_all_events")
   df_events           <- DBI::dbGetQuery(db_con, "SELECT * FROM df_events")
