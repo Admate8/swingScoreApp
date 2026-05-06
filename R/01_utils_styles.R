@@ -53,4 +53,4 @@ app_theme <- bslib::bs_theme(
   heading_font                = "Poppins",
   accordion_border_radius     = "0.75rem"
 ) |>
-  bslib::bs_add_rules(sass::sass_file("inst/app/www/custom_styles.scss"))
+  bslib::bs_add_rules(sass::sass_file(app_sys("inst/app/www/custom_styles.scss")))
