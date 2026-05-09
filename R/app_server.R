@@ -23,20 +23,20 @@ app_server <- function(input, output, session) {
   #   dbname   = db_name
   # )
 
-  df_all_events       <- DBI::dbGetQuery(db_con, "SELECT * FROM df_all_events")
-  df_events           <- DBI::dbGetQuery(db_con, "SELECT * FROM df_events")
-  df_subevents        <- DBI::dbGetQuery(db_con, "SELECT * FROM df_subevents")
-  df_dancers          <- DBI::dbGetQuery(db_con, "SELECT * FROM df_dancers") |>
-    dplyr::mutate(contestant_id = paste0(contestant, "_", wsdc_id)) |>
-    dplyr::left_join(
-      df_events |> dplyr::distinct(event_id, event_date, event_name),
-      by = "event_id"
-    )
-  df_first_final      <- DBI::dbGetQuery(db_con, "SELECT * FROM df_first_final")
-  df_placement_counts <- DBI::dbGetQuery(db_con, "SELECT * FROM df_placement_counts")
-  df_comps            <- DBI::dbGetQuery(db_con, "SELECT * FROM df_competitions")
-
-  on.exit(DBI::dbDisconnect(db_con))
+  # df_all_events       <- DBI::dbGetQuery(db_con, "SELECT * FROM df_all_events")
+  # df_events           <- DBI::dbGetQuery(db_con, "SELECT * FROM df_events")
+  # df_subevents        <- DBI::dbGetQuery(db_con, "SELECT * FROM df_subevents")
+  # df_dancers          <- DBI::dbGetQuery(db_con, "SELECT * FROM df_dancers") |>
+  #   dplyr::mutate(contestant_id = paste0(contestant, "_", wsdc_id)) |>
+  #   dplyr::left_join(
+  #     df_events |> dplyr::distinct(event_id, event_date, event_name),
+  #     by = "event_id"
+  #   )
+  # df_first_final      <- DBI::dbGetQuery(db_con, "SELECT * FROM df_first_final")
+  # df_placement_counts <- DBI::dbGetQuery(db_con, "SELECT * FROM df_placement_counts")
+  # df_comps            <- DBI::dbGetQuery(db_con, "SELECT * FROM df_competitions")
+  #
+  # on.exit(DBI::dbDisconnect(db_con))
 
 
   # Picker for dancer options
