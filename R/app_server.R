@@ -14,6 +14,8 @@ app_server <- function(input, output, session) {
     user     = Sys.getenv("NEON_USER"),
     password = Sys.getenv("NEON_PASSWORD")
   )
+
+  # NOT IN USE
   # db_con <- DBI::dbConnect(
   #   RPostgres::Postgres(),
   #   host     = db_host,
@@ -22,6 +24,7 @@ app_server <- function(input, output, session) {
   #   port     = 5432,
   #   dbname   = db_name
   # )
+
 
   df_all_events       <- DBI::dbGetQuery(db_con, "SELECT * FROM df_all_events")
   df_events           <- DBI::dbGetQuery(db_con, "SELECT * FROM df_events")
@@ -34,7 +37,7 @@ app_server <- function(input, output, session) {
     )
   df_first_final      <- DBI::dbGetQuery(db_con, "SELECT * FROM df_first_final")
   df_placement_counts <- DBI::dbGetQuery(db_con, "SELECT * FROM df_placement_counts")
-  df_comps            <- DBI::dbGetQuery(db_con, "SELECT * FROM df_competitions")
+  df_comps            <- DBI::dbGetQuery(db_con, "SELECT * FROM df_comps")
 
   on.exit(DBI::dbDisconnect(db_con))
 
@@ -45,7 +48,8 @@ app_server <- function(input, output, session) {
     df_helper <- df_dancers |>
       dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
       dplyr::distinct(contestant, wsdc_id, contestant_id) |>
-      dplyr::arrange(contestant)
+      dplyr::arrange(contestant) |>
+      dplyr::filter(contestant != "")
 
     shinyWidgets::pickerInput(
       inputId    = "select_dancer",
