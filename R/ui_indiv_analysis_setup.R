@@ -18,11 +18,66 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           multiple = FALSE,
           bslib::accordion_panel(
             title = "What is the Omega score?",
-            lorem::ipsum(2)
+            tags$div(
+              style = "text-align: justify;padding:1rem;",
+              tags$p(
+                tags$span("The Omega Score", class = "glass-div-header", style = "font-size:1rem;text-align:left;"),
+                " is a metric designed to capture your performance in all
+                rounds of West Coast Swing competitions, not just in the final -
+                regardless of event size,
+                role, division, or the number of judges. It ranges from 0 to 100,
+                making it easy to track your progression over time."
+              ),
+              tags$ul(
+                tags$li(
+                  "You'll score 0 if all judges give you a \"No\" in the prelims."
+                ),
+                tags$li(
+                  "You'll score 100 if you win the competition and receive a \"Yes\" from every judge in all non-final rounds."
+                )
+              ),
+              tags$p(
+                "Omega rewards your effort in competitive settings by adding context
+                to your raw results, helping you see progress even when you don't
+                make the final - and giving you motivation to keep improving toward
+                your next division."
+              ),
+              tags$p(
+                "You can read more about how it's calculated, including detailed
+                examples and a full technical walkthrough, on the ",
+                tags$a(
+                  "Swing Score website.",
+                  href = "https://swing-score.netlify.app",
+                  target = "_blank"
+                )
+              )
+            )
           ),
           bslib::accordion_panel(
             title = "My competition is missing. Why?",
-            lorem::ipsum(2)
+            tags$div(
+              style = "text-align: justify;padding:1rem;",
+              tags$p(
+                "Not all competition results are publicly available. You can find
+                all events and competitions used in this app in the table on the
+                right-hand side. Currently, only events from ",
+                tags$a(
+                  "scoring.dance",
+                  href = "https://scoring.dance/enCA/",
+                  target = "_blank"
+                ), "are included."
+              ),
+              tags$p(
+                "This means that if you competed in an event that isn't published
+                there - or whose results are unavailable, hidden, or incorrectly
+                submitted - you won't see your Omega Score for those competitions."
+              ),
+              tags$p(
+                "Because Omega is a comprehensive metric, it requires more information
+                than just your \"Yes\"s, \"No\"s, and \"Alt\"s. As a result,
+                your progression charts may be missing some past competitions."
+              )
+            )
           ),
           bslib::accordion_panel(
             title = "I can't see my name or WSDC ID. Why?",
@@ -33,7 +88,7 @@ ui_individual_analysis_setup <- bslib::layout_columns(
             lorem::ipsum(2)
           ),
           bslib::accordion_panel(
-            title = "My WSDC ID is negative. Why?",
+            title = "My details or data seem incorrect. Why?",
             lorem::ipsum(2)
           )
         ),

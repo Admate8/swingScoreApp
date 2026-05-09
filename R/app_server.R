@@ -45,7 +45,8 @@ app_server <- function(input, output, session) {
     df_helper <- df_dancers |>
       dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
       dplyr::distinct(contestant, wsdc_id, contestant_id) |>
-      dplyr::arrange(contestant)
+      dplyr::arrange(contestant) |>
+      dplyr::filter(contestant != "")
 
     shinyWidgets::pickerInput(
       inputId    = "select_dancer",
