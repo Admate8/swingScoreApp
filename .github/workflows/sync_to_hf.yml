@@ -16,5 +16,7 @@ jobs:
           git config --global user.name "GitHub Actions"
           git clone https://Admate8:$HF_TOKEN@huggingface.co/spaces/Admate8/swingScore hf_space
           cd hf_space
-          git commit --allow-empty -m "Trigger rebuild"
+          sed -i "s/ARG CACHEBUST=.*/ARG CACHEBUST=$(date +%s)/" Dockerfile
+          git add Dockerfile
+          git commit -m "Cache bust: $(date +%s)"
           git push
