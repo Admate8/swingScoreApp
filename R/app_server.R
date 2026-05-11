@@ -50,7 +50,7 @@ app_server <- function(input, output, session) {
       dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
       dplyr::distinct(contestant, wsdc_id, contestant_id) |>
       dplyr::arrange(contestant) |>
-      dplyr::filter(contestant != "") |>
+      dplyr::filter(contestant != "")
 
     shinyWidgets::pickerInput(
       inputId    = "select_dancer",
