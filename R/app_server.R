@@ -6,6 +6,19 @@
 #' @noRd
 app_server <- function(input, output, session) {
 
+  showNotification(
+    tags$div(
+      tags$div(
+        style = "text-align: center; padding-bottom: 10px;",
+        tags$h5("Note!")
+      ),
+      tags$p("This app is not designed for mobile devices. For the best experience, please use a desktop or laptop browser instead.")
+    ),
+    type = "default",
+    duration = 10
+  )
+
+
   # Load Data ----
   db_con <- DBI::dbConnect(
     RPostgres::Postgres(),
@@ -131,6 +144,7 @@ app_server <- function(input, output, session) {
       )
     )
   })
+
 
   # Hint notification ----
   debounced_button_dancer_selected <- reactive({
