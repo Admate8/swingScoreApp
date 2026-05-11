@@ -81,15 +81,92 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           ),
           bslib::accordion_panel(
             title = "I can't see my name or WSDC ID. Why?",
-            lorem::ipsum(1)
+            tags$div(
+              style = "text-align: justify;padding:1rem;",
+              tags$p(
+                "There are at least two possible reasons for this. Either you didn't
+                compete in any of the available events or competitions (see the
+                table on the right), or you did compete but your data was entered
+                or processed incorrectly. If you can find your results for a specific
+                event on scoring.dance but not here, ",
+                tags$a(
+                  "get in touch.",
+                  href = "mailto:omega.dancing.score@gmail.com",
+                  target = "_blank"
+                )
+              )
+            )
           ),
           bslib::accordion_panel(
             title = "My WSDC ID shows as NA. Why?",
-            lorem::ipsum(2)
+            tags$div(
+              style = "text-align: justify;padding:1rem;",
+              tags$p(
+                "You're assigned a unique WSDC ID once you earn at least one WSDC
+                point (typically by placing in the final, depending on the
+                competition size). If you haven't reached that milestone yet,
+                your WSDC ID will appear as NA - but don't worry. Your progress
+                still matters, and your Omega Score will reflect it."
+              ),
+              tags$p(
+                "Another possible issue is incorrect data on ",
+                tags$a(
+                  "scoring.dance.",
+                  href = "https://scoring.dance/enCA/",
+                  target = "_blank"
+                ), ".
+                If your name or WSDC ID was submitted incorrectly, it may not
+                match the official WSDC records. In such cases, a misspelled name
+                might be treated as a different competitor altogether. If you think
+                this might apply to you, ",
+                tags$a(
+                  "get in touch.",
+                  href = "mailto:omega.dancing.score@gmail.com",
+                  target = "_blank"
+                )
+              )
+            )
           ),
           bslib::accordion_panel(
             title = "My details or data seem incorrect. Why?",
-            lorem::ipsum(2)
+            tags$div(
+              style = "text-align: justify;padding:1rem;",
+              tags$p(
+                "There are at least two reasons why this might happen."
+              ),
+              tags$p(
+                "First, your data for a particular event or competition on ",
+                tags$a(
+                  "scoring.dance",
+                  href = "https://scoring.dance/enCA/",
+                  target = "_blank"
+                ),
+                " may have been entered incorrectly. The app tries to fix minor
+                issues - such as small spelling mistakes in names, missing WSDC IDs,
+                surname changes, or typos in IDs - but it's not possible to catch
+                everything. The WSDC system itself focuses on results that
+                award points, so non-scoring entries may be less consistent.
+                In some cases, the same person might even appear with multiple
+                WSDC IDs, which ideally shouldn't happen unless two dancers share
+                the exact same name."
+              ),
+              tags$p(
+                "Second, the issue may come from the data processing side.
+                When names are very similar, our correction methods might accidentally
+                merge two different dancers into one. Unfortunately, there's no
+                reliable way to detect this automatically unless it's reported.
+                This is further complicated by inconsistencies in scoring.dance data."
+              ),
+              tags$p(
+                "In short, mistakes can and do happen - but they can be fixed.
+                If you think this applies to you, ",
+                tags$a(
+                  "get in touch.",
+                  href = "mailto:omega.dancing.score@gmail.com",
+                  target = "_blank"
+                )
+              )
+            )
           )
         ),
 
@@ -97,7 +174,7 @@ ui_individual_analysis_setup <- bslib::layout_columns(
           condition = "input.select_dancer != null && input.select_dancer != ''",
           actionButton(
             class   = "btn-glow",
-            style   = "font-size:2em;font-weight:bold;",
+            style   = "font-size:1.5em;font-weight:bold;",
             inputId = "button_dancer_selected",
             label   = "Show me!",
             onclick = "fullpage_api.moveTo(3, 0);"
