@@ -44,17 +44,22 @@ app_server <- function(input, output, session) {
 
   # Picker for dancer options
   output$pickerInput_dancer <- renderUI({
+    req(df_dancers)
 
     df_helper <- df_dancers |>
       dplyr::mutate(contestant = stringr::str_to_title(contestant)) |>
       dplyr::distinct(contestant, wsdc_id, contestant_id) |>
       dplyr::arrange(contestant) |>
+<<<<<<< HEAD
       dplyr::filter(contestant != "") |>
       dplyr::mutate(test = 1)
+=======
+      dplyr::filter(contestant != "")
+>>>>>>> dev
 
     shinyWidgets::pickerInput(
       inputId    = "select_dancer",
-      label      = NULL,
+      label      = tags$span("Find Your Name or WSDC ID", class = "glass-div-header", style = "font-size:1.4rem;"),
       selected   = NULL,
       multiple   = FALSE,
       width      = "25rem",
